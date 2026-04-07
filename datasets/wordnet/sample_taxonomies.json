@@ -1,0 +1,1832 @@
+{
+  "animal": {
+    "name": "animal.n.01",
+    "lemmas": [
+      "animal",
+      "animate_being",
+      "beast",
+      "brute",
+      "creature",
+      "fauna"
+    ],
+    "definition": "a living organism characterized by voluntary movement",
+    "depth": 0,
+    "children": [
+      {
+        "name": "migrator.n.02",
+        "lemmas": [
+          "migrator"
+        ],
+        "definition": "an animal (especially birds and fish) that travels between different habitats at particular times of the year",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "invertebrate.n.01",
+        "lemmas": [
+          "invertebrate"
+        ],
+        "definition": "any animal lacking a backbone or notochord; the term is not used as a scientific classification",
+        "depth": 1,
+        "children": [
+          {
+            "name": "entoproct.n.01",
+            "lemmas": [
+              "entoproct"
+            ],
+            "definition": "any of various moss-like aquatic animals usually forming branching colonies; each polyp having a both mouth and anus within a closed ring of tentacles",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "coelenterate.n.01",
+            "lemmas": [
+              "coelenterate",
+              "cnidarian"
+            ],
+            "definition": "radially symmetrical animals having saclike bodies with only one opening and tentacles with stinging structures; they occur in polyp and medusa forms",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "ctenophore.n.01",
+            "lemmas": [
+              "ctenophore",
+              "comb_jelly"
+            ],
+            "definition": "biradially symmetrical hermaphroditic solitary marine animals resembling jellyfishes having for locomotion eight rows of cilia arranged like teeth in a comb",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "woodborer.n.01",
+            "lemmas": [
+              "woodborer",
+              "borer"
+            ],
+            "definition": "any of various insects or larvae or mollusks that bore into wood",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "phoronid.n.01",
+            "lemmas": [
+              "phoronid"
+            ],
+            "definition": "hermaphrodite wormlike animal living in mud of the sea bottom",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "mollusk.n.01",
+            "lemmas": [
+              "mollusk",
+              "mollusc",
+              "shellfish"
+            ],
+            "definition": "invertebrate having a soft unsegmented body usually enclosed in a shell",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "zoophyte.n.01",
+            "lemmas": [
+              "zoophyte"
+            ],
+            "definition": "any of various invertebrate animals resembling a plant such as a sea anemone or coral or sponge",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "brachiopod.n.01",
+            "lemmas": [
+              "brachiopod",
+              "lamp_shell",
+              "lampshell"
+            ],
+            "definition": "marine animal with bivalve shell having a pair of arms bearing tentacles for capturing food; found worldwide",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "rotifer.n.01",
+            "lemmas": [
+              "rotifer"
+            ],
+            "definition": "minute aquatic multicellular organisms having a ciliated wheel-like organ for feeding and locomotion; constituents of freshwater plankton",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "peanut_worm.n.01",
+            "lemmas": [
+              "peanut_worm",
+              "sipunculid"
+            ],
+            "definition": "small unsegmented marine worm that when disturbed retracts its anterior portion into the body giving the appearance of a peanut",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "mutant.n.02",
+        "lemmas": [
+          "mutant"
+        ],
+        "definition": "an animal that has undergone mutation",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "omnivore.n.02",
+        "lemmas": [
+          "omnivore"
+        ],
+        "definition": "an animal that feeds on both animal and vegetable substances",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "herbivore.n.01",
+        "lemmas": [
+          "herbivore"
+        ],
+        "definition": "any animal that feeds chiefly on grass and other plants",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "game.n.04",
+        "lemmas": [
+          "game"
+        ],
+        "definition": "animal hunted for food or sport",
+        "depth": 1,
+        "children": [
+          {
+            "name": "big_game.n.01",
+            "lemmas": [
+              "big_game"
+            ],
+            "definition": "large animals that are hunted for sport",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "game_bird.n.01",
+            "lemmas": [
+              "game_bird"
+            ],
+            "definition": "any bird (as grouse or pheasant) that is hunted for sport",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "prey.n.02",
+        "lemmas": [
+          "prey",
+          "quarry"
+        ],
+        "definition": "animal hunted or caught for food",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "insectivore.n.02",
+        "lemmas": [
+          "insectivore"
+        ],
+        "definition": "any organism that feeds mainly on insects",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "fictional_animal.n.01",
+        "lemmas": [
+          "fictional_animal"
+        ],
+        "definition": "animals that exist only in fiction (usually in children's stories)",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "domestic_animal.n.01",
+        "lemmas": [
+          "domestic_animal",
+          "domesticated_animal"
+        ],
+        "definition": "any of various animals that have been tamed and made fit for a human environment",
+        "depth": 1,
+        "children": [
+          {
+            "name": "stray.n.01",
+            "lemmas": [
+              "stray"
+            ],
+            "definition": "an animal that has strayed (especially a domestic animal)",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "head.n.02",
+            "lemmas": [
+              "head"
+            ],
+            "definition": "a single domestic animal",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "stocker.n.01",
+            "lemmas": [
+              "stocker"
+            ],
+            "definition": "a domestic animal (especially a young steer or heifer) kept as stock until fattened or matured and suitable for a breeding establishment",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "domestic_cat.n.01",
+            "lemmas": [
+              "domestic_cat",
+              "house_cat",
+              "Felis_domesticus",
+              "Felis_catus"
+            ],
+            "definition": "any domesticated member of the genus Felis",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "dog.n.01",
+            "lemmas": [
+              "dog",
+              "domestic_dog",
+              "Canis_familiaris"
+            ],
+            "definition": "a member of the genus Canis (probably descended from the common wolf) that has been domesticated by man since prehistoric times; occurs in many breeds",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "feeder.n.01",
+            "lemmas": [
+              "feeder"
+            ],
+            "definition": "an animal being fattened or suitable for fattening",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  "plant": {
+    "name": "plant.n.02",
+    "lemmas": [
+      "plant",
+      "flora",
+      "plant_life"
+    ],
+    "definition": "(botany) a living organism lacking the power of locomotion",
+    "depth": 0,
+    "children": [
+      {
+        "name": "endemic.n.02",
+        "lemmas": [
+          "endemic"
+        ],
+        "definition": "a plant that is native to a certain limited area",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "annual.n.01",
+        "lemmas": [
+          "annual"
+        ],
+        "definition": "(botany) a plant that completes its entire life cycle within the space of a year",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "plantlet.n.01",
+        "lemmas": [
+          "plantlet"
+        ],
+        "definition": "a young plant or a small plant",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "myrmecophyte.n.01",
+        "lemmas": [
+          "myrmecophyte"
+        ],
+        "definition": "plant that affords shelter or food to ants that live in symbiotic relations with it",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "aquatic.n.01",
+        "lemmas": [
+          "aquatic"
+        ],
+        "definition": "a plant that lives in or on water",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "escape.n.06",
+        "lemmas": [
+          "escape"
+        ],
+        "definition": "a plant originally cultivated but now growing wild",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "gametophyte.n.01",
+        "lemmas": [
+          "gametophyte"
+        ],
+        "definition": "the gamete-bearing individual or phase in the life cycle of a plant having alternation of generations",
+        "depth": 1,
+        "children": [
+          {
+            "name": "microgametophyte.n.01",
+            "lemmas": [
+              "microgametophyte"
+            ],
+            "definition": "the male gametophyte produced by a microspore",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "megagametophyte.n.01",
+            "lemmas": [
+              "megagametophyte"
+            ],
+            "definition": "the female gametophyte produced by the megaspore of a plant that produces both microspore and megaspores",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "ornamental.n.01",
+        "lemmas": [
+          "ornamental"
+        ],
+        "definition": "any plant grown for its beauty or ornamental value",
+        "depth": 1,
+        "children": [
+          {
+            "name": "flowering_maple.n.01",
+            "lemmas": [
+              "flowering_maple"
+            ],
+            "definition": "an ornamental plant of the genus Abutilon having leaves that resemble maple leaves",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "sporophyte.n.01",
+        "lemmas": [
+          "sporophyte"
+        ],
+        "definition": "the spore-producing individual or phase in the life cycle of a plant having alternation of generations",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "wilding.n.01",
+        "lemmas": [
+          "wilding"
+        ],
+        "definition": "a wild uncultivated plant (especially a wild apple or crabapple tree)",
+        "depth": 1,
+        "children": [
+          {
+            "name": "wildflower.n.01",
+            "lemmas": [
+              "wildflower",
+              "wild_flower"
+            ],
+            "definition": "wild or uncultivated flowering plant",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  "vehicle": {
+    "name": "vehicle.n.01",
+    "lemmas": [
+      "vehicle"
+    ],
+    "definition": "a conveyance that transports people or objects",
+    "depth": 0,
+    "children": [
+      {
+        "name": "military_vehicle.n.01",
+        "lemmas": [
+          "military_vehicle"
+        ],
+        "definition": "vehicle used by the armed forces",
+        "depth": 1,
+        "children": [
+          {
+            "name": "picket.n.04",
+            "lemmas": [
+              "picket"
+            ],
+            "definition": "a vehicle performing sentinel duty",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "humvee.n.01",
+            "lemmas": [
+              "Humvee",
+              "Hum-Vee"
+            ],
+            "definition": "a high mobility, multipurpose, military vehicle with four-wheel drive",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "half_track.n.01",
+            "lemmas": [
+              "half_track"
+            ],
+            "definition": "a motor vehicle propelled by half tracks; frequently used by the military",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "warplane.n.01",
+            "lemmas": [
+              "warplane",
+              "military_plane"
+            ],
+            "definition": "an aircraft designed and used for combat",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "technical.n.01",
+            "lemmas": [
+              "technical"
+            ],
+            "definition": "a pickup truck with a gun mounted on it",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "troop_carrier.n.01",
+            "lemmas": [
+              "troop_carrier",
+              "troop_transport"
+            ],
+            "definition": "any land or sea or air vehicle designed to carry troops",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "personnel_carrier.n.01",
+            "lemmas": [
+              "personnel_carrier"
+            ],
+            "definition": "a military vehicle (usually armored) for transporting military personnel and their equipment",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "tank.n.01",
+            "lemmas": [
+              "tank",
+              "army_tank",
+              "armored_combat_vehicle",
+              "armoured_combat_vehicle"
+            ],
+            "definition": "an enclosed armored military vehicle; has a cannon and moves on caterpillar treads",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "weapons_carrier.n.01",
+            "lemmas": [
+              "weapons_carrier"
+            ],
+            "definition": "military vehicle that is a light truck designed to carry mortars or machine guns and their crews",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "caisson.n.02",
+            "lemmas": [
+              "caisson"
+            ],
+            "definition": "a two-wheeled military vehicle carrying artillery ammunition",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "wheeled_vehicle.n.01",
+        "lemmas": [
+          "wheeled_vehicle"
+        ],
+        "definition": "a vehicle that moves on wheels and usually has a container for transporting things or people",
+        "depth": 1,
+        "children": [
+          {
+            "name": "car.n.02",
+            "lemmas": [
+              "car",
+              "railcar",
+              "railway_car",
+              "railroad_car"
+            ],
+            "definition": "a wheeled vehicle adapted to the rails of railroad",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "handcart.n.01",
+            "lemmas": [
+              "handcart",
+              "pushcart",
+              "cart",
+              "go-cart"
+            ],
+            "definition": "wheeled vehicle that can be pushed by a person; may have one or two or four wheels",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "self-propelled_vehicle.n.01",
+            "lemmas": [
+              "self-propelled_vehicle"
+            ],
+            "definition": "a wheeled vehicle that carries in itself a means of propulsion",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "wagon.n.04",
+            "lemmas": [
+              "wagon",
+              "coaster_wagon"
+            ],
+            "definition": "a child's four-wheeled toy cart sometimes used for coasting",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "scooter.n.02",
+            "lemmas": [
+              "scooter"
+            ],
+            "definition": "child's two-wheeled vehicle operated by foot",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "wagon.n.01",
+            "lemmas": [
+              "wagon",
+              "waggon"
+            ],
+            "definition": "any of various kinds of wheeled vehicles drawn by an animal or a tractor",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "rolling_stock.n.01",
+            "lemmas": [
+              "rolling_stock"
+            ],
+            "definition": "collection of wheeled vehicles owned by a railroad or motor carrier",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "unicycle.n.01",
+            "lemmas": [
+              "unicycle",
+              "monocycle"
+            ],
+            "definition": "a vehicle with a single wheel that is driven by pedals",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "skateboard.n.01",
+            "lemmas": [
+              "skateboard"
+            ],
+            "definition": "a board with wheels that is ridden in a standing or crouching position and propelled by foot",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "bicycle.n.01",
+            "lemmas": [
+              "bicycle",
+              "bike",
+              "wheel",
+              "cycle"
+            ],
+            "definition": "a wheeled vehicle that has two wheels and is moved by foot pedals",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "rocket.n.01",
+        "lemmas": [
+          "rocket",
+          "projectile"
+        ],
+        "definition": "any vehicle self-propelled by a rocket engine",
+        "depth": 1,
+        "children": [
+          {
+            "name": "missile.n.01",
+            "lemmas": [
+              "missile"
+            ],
+            "definition": "a rocket carrying a warhead of conventional or nuclear explosives; may be ballistic or directed by remote control",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "test_rocket.n.01",
+            "lemmas": [
+              "test_rocket",
+              "research_rocket",
+              "test_instrument_vehicle"
+            ],
+            "definition": "a rocket fired for test purposes",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "multistage_rocket.n.01",
+            "lemmas": [
+              "multistage_rocket",
+              "step_rocket"
+            ],
+            "definition": "a rocket having two or more rocket engines (each with its own fuel) that are fired in succession and jettisoned when the fuel is exhausted",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "bumper_car.n.01",
+        "lemmas": [
+          "bumper_car",
+          "Dodgem"
+        ],
+        "definition": "a small low-powered electrically powered vehicle driven on a special platform where there are many others to be dodged",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "steamroller.n.02",
+        "lemmas": [
+          "steamroller",
+          "road_roller"
+        ],
+        "definition": "vehicle equipped with heavy wide smooth rollers for compacting roads and pavements",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "craft.n.02",
+        "lemmas": [
+          "craft"
+        ],
+        "definition": "a vehicle designed for navigation in or on water or air or through outer space",
+        "depth": 1,
+        "children": [
+          {
+            "name": "spacecraft.n.01",
+            "lemmas": [
+              "spacecraft",
+              "ballistic_capsule",
+              "space_vehicle"
+            ],
+            "definition": "a craft capable of traveling in outer space; technically, a satellite around the sun",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "aircraft.n.01",
+            "lemmas": [
+              "aircraft"
+            ],
+            "definition": "a vehicle that can fly",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "landing_craft.n.01",
+            "lemmas": [
+              "landing_craft"
+            ],
+            "definition": "naval craft designed for putting ashore troops and equipment",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "hovercraft.n.01",
+            "lemmas": [
+              "hovercraft",
+              "ground-effect_machine"
+            ],
+            "definition": "a craft capable of moving over water or land on a cushion of air created by jet engines",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "vessel.n.02",
+            "lemmas": [
+              "vessel",
+              "watercraft"
+            ],
+            "definition": "a craft designed for water transportation",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "skibob.n.01",
+        "lemmas": [
+          "skibob"
+        ],
+        "definition": "a vehicle resembling a bicycle but having skis instead of wheels; the rider wears short skis for balancing",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "sled.n.01",
+        "lemmas": [
+          "sled",
+          "sledge",
+          "sleigh"
+        ],
+        "definition": "a vehicle mounted on runners and pulled by horses or dogs; for transportation over snow",
+        "depth": 1,
+        "children": [
+          {
+            "name": "luge.n.01",
+            "lemmas": [
+              "luge"
+            ],
+            "definition": "a racing sled for one or two people",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "bobsled.n.02",
+            "lemmas": [
+              "bobsled",
+              "bobsleigh",
+              "bob"
+            ],
+            "definition": "a long racing sled (for 2 or more people) with a steering mechanism",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "toboggan.n.01",
+            "lemmas": [
+              "toboggan"
+            ],
+            "definition": "a long narrow sled without runners; boards curve upward in front",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "bobsled.n.01",
+            "lemmas": [
+              "bobsled",
+              "bobsleigh"
+            ],
+            "definition": "formerly two short sleds coupled together",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "dogsled.n.01",
+            "lemmas": [
+              "dogsled",
+              "dog_sled",
+              "dog_sleigh"
+            ],
+            "definition": "a sled pulled by dogs",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "pung.n.01",
+            "lemmas": [
+              "pung"
+            ],
+            "definition": "a one-horse sleigh consisting of a box on runners",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  "food": {
+    "name": "food.n.01",
+    "lemmas": [
+      "food",
+      "nutrient"
+    ],
+    "definition": "any substance that can be metabolized by an animal to give energy and build tissue",
+    "depth": 0,
+    "children": [
+      {
+        "name": "micronutrient.n.01",
+        "lemmas": [
+          "micronutrient"
+        ],
+        "definition": "a substance needed only in small amounts for normal body function (e.g., vitamins or minerals)",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "foodstuff.n.02",
+        "lemmas": [
+          "foodstuff",
+          "food_product"
+        ],
+        "definition": "a substance that can be used or prepared for use as food",
+        "depth": 1,
+        "children": [
+          {
+            "name": "juice.n.01",
+            "lemmas": [
+              "juice"
+            ],
+            "definition": "the liquid part that can be extracted from plant or animal tissue by squeezing or cooking",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "egg.n.02",
+            "lemmas": [
+              "egg",
+              "eggs"
+            ],
+            "definition": "oval reproductive body of a fowl (especially a hen) used as food",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "coloring.n.01",
+            "lemmas": [
+              "coloring",
+              "colouring",
+              "food_coloring",
+              "food_colouring",
+              "food_color",
+              "food_colour"
+            ],
+            "definition": "a digestible substance used to give color to food",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "concoction.n.01",
+            "lemmas": [
+              "concoction",
+              "mixture",
+              "intermixture"
+            ],
+            "definition": "any foodstuff made by combining different ingredients",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "canned_food.n.01",
+            "lemmas": [
+              "canned_food",
+              "canned_foods",
+              "canned_goods",
+              "tinned_goods"
+            ],
+            "definition": "food preserved by canning",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "ingredient.n.03",
+            "lemmas": [
+              "ingredient",
+              "fixings"
+            ],
+            "definition": "food that is a component of a mixture in cooking",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "dairy_product.n.01",
+            "lemmas": [
+              "dairy_product"
+            ],
+            "definition": "milk and butter and cheese",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "flour.n.01",
+            "lemmas": [
+              "flour"
+            ],
+            "definition": "fine powdery foodstuff obtained by grinding and sifting the meal of a cereal grain",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "grain.n.02",
+            "lemmas": [
+              "grain",
+              "food_grain",
+              "cereal"
+            ],
+            "definition": "foodstuff prepared from the starchy grains of cereal grasses",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "cocoa.n.02",
+            "lemmas": [
+              "cocoa"
+            ],
+            "definition": "powder of ground roasted cacao beans with most of the fat removed",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "beverage.n.01",
+        "lemmas": [
+          "beverage",
+          "drink",
+          "drinkable",
+          "potable"
+        ],
+        "definition": "any liquid suitable for drinking",
+        "depth": 1,
+        "children": [
+          {
+            "name": "near_beer.n.01",
+            "lemmas": [
+              "near_beer"
+            ],
+            "definition": "drink that resembles beer but with less than 1/2 percent alcohol",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "refresher.n.02",
+            "lemmas": [
+              "refresher"
+            ],
+            "definition": "a drink that refreshes",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "cooler.n.02",
+            "lemmas": [
+              "cooler"
+            ],
+            "definition": "an iced drink especially white wine and fruit juice",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "smoothie.n.02",
+            "lemmas": [
+              "smoothie"
+            ],
+            "definition": "a thick smooth drink consisting of fresh fruit pureed with ice cream or yoghurt or milk",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "wish-wash.n.01",
+            "lemmas": [
+              "wish-wash"
+            ],
+            "definition": "any thin watery drink",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "coffee.n.01",
+            "lemmas": [
+              "coffee",
+              "java"
+            ],
+            "definition": "a beverage consisting of an infusion of ground coffee beans",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "cocoa.n.01",
+            "lemmas": [
+              "cocoa",
+              "chocolate",
+              "hot_chocolate",
+              "drinking_chocolate"
+            ],
+            "definition": "a beverage made from cocoa powder and milk and sugar; usually drunk hot",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "soft_drink.n.01",
+            "lemmas": [
+              "soft_drink"
+            ],
+            "definition": "nonalcoholic beverage (usually carbonated)",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "fruit_juice.n.01",
+            "lemmas": [
+              "fruit_juice",
+              "fruit_crush"
+            ],
+            "definition": "drink produced by squeezing or crushing fruit",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "mate.n.09",
+            "lemmas": [
+              "mate"
+            ],
+            "definition": "South American tea-like drink made from leaves of a South American holly called mate",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "chyme.n.01",
+        "lemmas": [
+          "chyme"
+        ],
+        "definition": "a semiliquid mass of partially digested food that passes from the stomach through the pyloric sphincter into the duodenum",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "commissariat.n.01",
+        "lemmas": [
+          "commissariat",
+          "provisions",
+          "provender",
+          "viands",
+          "victuals"
+        ],
+        "definition": "a stock or supply of foods",
+        "depth": 1,
+        "children": [
+          {
+            "name": "food_cache.n.01",
+            "lemmas": [
+              "food_cache"
+            ],
+            "definition": "food in a secure or hidden storage place",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "larder.n.01",
+            "lemmas": [
+              "larder"
+            ],
+            "definition": "a supply of food especially for a household",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "feed.n.01",
+        "lemmas": [
+          "feed",
+          "provender"
+        ],
+        "definition": "food for domestic livestock",
+        "depth": 1,
+        "children": [
+          {
+            "name": "mash.n.02",
+            "lemmas": [
+              "mash"
+            ],
+            "definition": "mixture of ground animal feeds",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "cattle_cake.n.01",
+            "lemmas": [
+              "cattle_cake"
+            ],
+            "definition": "a concentrated feed for cattle; processed in the form of blocks or cakes",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "silage.n.01",
+            "lemmas": [
+              "silage",
+              "ensilage"
+            ],
+            "definition": "fodder harvested while green and kept succulent by partial fermentation as in a silo",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "slop.n.01",
+            "lemmas": [
+              "slop",
+              "slops",
+              "swill",
+              "pigswill",
+              "pigwash"
+            ],
+            "definition": "wet feed (especially for pigs) consisting of mostly kitchen waste mixed with water or skimmed or sour milk",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "bird_feed.n.01",
+            "lemmas": [
+              "bird_feed",
+              "bird_food",
+              "birdseed"
+            ],
+            "definition": "food given to birds; usually mixed seeds",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "fodder.n.02",
+            "lemmas": [
+              "fodder"
+            ],
+            "definition": "coarse food (especially for livestock) composed of entire plants or the leaves and stalks of a cereal crop",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "blood_meal.n.01",
+            "lemmas": [
+              "blood_meal"
+            ],
+            "definition": "the dried and powdered blood of animals",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "corn_gluten_feed.n.01",
+            "lemmas": [
+              "corn_gluten_feed"
+            ],
+            "definition": "a feed consisting primarily of corn gluten",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "feed_grain.n.01",
+            "lemmas": [
+              "feed_grain"
+            ],
+            "definition": "grain grown for cattle feed",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "oil_cake.n.01",
+            "lemmas": [
+              "oil_cake"
+            ],
+            "definition": "mass of e.g. linseed or cottonseed or soybean from which the oil has been pressed; used as food for livestock",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "water.n.06",
+        "lemmas": [
+          "water"
+        ],
+        "definition": "a liquid necessary for the life of most animals and plants",
+        "depth": 1,
+        "children": [
+          {
+            "name": "branch_water.n.01",
+            "lemmas": [
+              "branch_water"
+            ],
+            "definition": "pure natural water from a stream or brook; often distinguished from soda water",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "spring_water.n.02",
+            "lemmas": [
+              "spring_water"
+            ],
+            "definition": "water from a spring",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "drinking_water.n.01",
+            "lemmas": [
+              "drinking_water"
+            ],
+            "definition": "water suitable for drinking",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "culture_medium.n.01",
+        "lemmas": [
+          "culture_medium",
+          "medium"
+        ],
+        "definition": "(bacteriology) a nutrient substance (solid or liquid) that is used to cultivate micro-organisms",
+        "depth": 1,
+        "children": [
+          {
+            "name": "agar.n.01",
+            "lemmas": [
+              "agar",
+              "nutrient_agar"
+            ],
+            "definition": "any culture medium that uses agar as the gelling agent",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "nutriment.n.01",
+        "lemmas": [
+          "nutriment",
+          "nourishment",
+          "nutrition",
+          "sustenance",
+          "aliment",
+          "alimentation",
+          "victuals"
+        ],
+        "definition": "a source of materials to nourish the body",
+        "depth": 1,
+        "children": [
+          {
+            "name": "stodge.n.01",
+            "lemmas": [
+              "stodge"
+            ],
+            "definition": "heavy and filling (and usually starchy) food",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "ingesta.n.01",
+            "lemmas": [
+              "ingesta"
+            ],
+            "definition": "solid and liquid nourishment taken into the body through the mouth",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "course.n.07",
+            "lemmas": [
+              "course"
+            ],
+            "definition": "part of a meal served at one time",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "milk.n.02",
+            "lemmas": [
+              "milk"
+            ],
+            "definition": "produced by mammary glands of female mammals for feeding their young",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "vitamin.n.01",
+            "lemmas": [
+              "vitamin"
+            ],
+            "definition": "any of a group of organic substances essential in small quantities to normal metabolism",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "fast_food.n.01",
+            "lemmas": [
+              "fast_food"
+            ],
+            "definition": "inexpensive food (hamburgers or chicken or milkshakes) prepared and served quickly",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "mess.n.03",
+            "lemmas": [
+              "mess"
+            ],
+            "definition": "soft semiliquid food",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "wheat_germ.n.01",
+            "lemmas": [
+              "wheat_germ"
+            ],
+            "definition": "embryo of the wheat kernel; removed before milling and eaten as a source of vitamins",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "finger_food.n.01",
+            "lemmas": [
+              "finger_food"
+            ],
+            "definition": "food to be eaten with the fingers",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "dainty.n.01",
+            "lemmas": [
+              "dainty",
+              "delicacy",
+              "goody",
+              "kickshaw",
+              "treat"
+            ],
+            "definition": "something considered choice to eat",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "yolk.n.02",
+        "lemmas": [
+          "yolk",
+          "vitellus"
+        ],
+        "definition": "nutritive material of an ovum stored for the nutrition of an embryo (especially the yellow mass of a bird or reptile egg)",
+        "depth": 1,
+        "children": []
+      }
+    ]
+  },
+  "color": {
+    "name": "color.n.01",
+    "lemmas": [
+      "color",
+      "colour",
+      "coloring",
+      "colouring"
+    ],
+    "definition": "a visual attribute of things that results from the light they emit or transmit or reflect",
+    "depth": 0,
+    "children": [
+      {
+        "name": "chromatic_color.n.01",
+        "lemmas": [
+          "chromatic_color",
+          "chromatic_colour",
+          "spectral_color",
+          "spectral_colour"
+        ],
+        "definition": "a color that has hue",
+        "depth": 1,
+        "children": [
+          {
+            "name": "blond.n.02",
+            "lemmas": [
+              "blond",
+              "blonde"
+            ],
+            "definition": "a light grayish yellow to near white",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "salmon.n.04",
+            "lemmas": [
+              "salmon"
+            ],
+            "definition": "a pale pinkish orange color",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "pink.n.01",
+            "lemmas": [
+              "pink"
+            ],
+            "definition": "a light shade of red",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "complementary_color.n.01",
+            "lemmas": [
+              "complementary_color",
+              "complementary"
+            ],
+            "definition": "either one of two chromatic colors that when mixed together give white (in the case of lights) or grey (in the case of pigments)",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "purple.n.01",
+            "lemmas": [
+              "purple",
+              "purpleness"
+            ],
+            "definition": "a purple color or pigment",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "pastel.n.01",
+            "lemmas": [
+              "pastel"
+            ],
+            "definition": "any of various pale or light colors",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "blue.n.01",
+            "lemmas": [
+              "blue",
+              "blueness"
+            ],
+            "definition": "blue color or pigment; resembling the color of the clear sky in the daytime",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "yellow.n.01",
+            "lemmas": [
+              "yellow",
+              "yellowness"
+            ],
+            "definition": "yellow color or pigment; the chromatic color resembling the hue of sunflowers or ripe lemons",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "green.n.01",
+            "lemmas": [
+              "green",
+              "greenness",
+              "viridity"
+            ],
+            "definition": "green color or pigment; resembling the color of growing grass",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "orange.n.02",
+            "lemmas": [
+              "orange",
+              "orangeness"
+            ],
+            "definition": "orange color or pigment; any of a range of colors between red and yellow",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "complexion.n.01",
+        "lemmas": [
+          "complexion",
+          "skin_color",
+          "skin_colour"
+        ],
+        "definition": "the coloring of a person's face",
+        "depth": 1,
+        "children": [
+          {
+            "name": "paleness.n.02",
+            "lemmas": [
+              "paleness",
+              "blondness",
+              "fairness"
+            ],
+            "definition": "the property of having a naturally light complexion",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "tawniness.n.01",
+            "lemmas": [
+              "tawniness"
+            ],
+            "definition": "the quality or state of being the color of tanned leather",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "lividness.n.01",
+            "lemmas": [
+              "lividness",
+              "lividity",
+              "luridness",
+              "paleness",
+              "pallidness",
+              "pallor",
+              "wanness",
+              "achromasia"
+            ],
+            "definition": "unnatural lack of color in the skin (as from bruising or sickness or emotional distress)",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "whiteness.n.03",
+            "lemmas": [
+              "whiteness"
+            ],
+            "definition": "lightness or fairness of complexion",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "sallowness.n.01",
+            "lemmas": [
+              "sallowness"
+            ],
+            "definition": "a sickly yellowish skin color",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "darkness.n.06",
+            "lemmas": [
+              "darkness",
+              "duskiness",
+              "swarthiness"
+            ],
+            "definition": "a swarthy complexion",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "ruddiness.n.01",
+            "lemmas": [
+              "ruddiness",
+              "rosiness"
+            ],
+            "definition": "a healthy reddish complexion",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "coloration.n.02",
+        "lemmas": [
+          "coloration",
+          "colouration"
+        ],
+        "definition": "appearance with regard to color",
+        "depth": 1,
+        "children": [
+          {
+            "name": "protective_coloration.n.01",
+            "lemmas": [
+              "protective_coloration"
+            ],
+            "definition": "coloration making an organism less visible or attractive to predators",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "hair_coloring.n.02",
+            "lemmas": [
+              "hair_coloring"
+            ],
+            "definition": "coloring of the hair",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "pigmentation.n.02",
+            "lemmas": [
+              "pigmentation"
+            ],
+            "definition": "coloration of living tissues by pigment",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "depigmentation.n.01",
+            "lemmas": [
+              "depigmentation"
+            ],
+            "definition": "absence or loss of pigmentation (or less than normal pigmentation) in the skin or hair",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "primary_color.n.01",
+        "lemmas": [
+          "primary_color",
+          "primary_colour"
+        ],
+        "definition": "any of three colors from which all others can be obtained by mixing",
+        "depth": 1,
+        "children": [
+          {
+            "name": "primary_color_for_pigments.n.01",
+            "lemmas": [
+              "primary_color_for_pigments",
+              "primary_colour_for_pigments"
+            ],
+            "definition": "any of three pigments from which all colors can be obtained by mixing",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "primary_color_for_light.n.01",
+            "lemmas": [
+              "primary_color_for_light",
+              "primary_colour_for_light"
+            ],
+            "definition": "any of three primary colors of light from which all colors can be obtained by additive mixing",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "shade.n.02",
+        "lemmas": [
+          "shade",
+          "tint",
+          "tincture",
+          "tone"
+        ],
+        "definition": "a quality of a given color that differs slightly from another color",
+        "depth": 1,
+        "children": [
+          {
+            "name": "undertone.n.03",
+            "lemmas": [
+              "undertone",
+              "tinge"
+            ],
+            "definition": "a pale or subdued color",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "mellowness.n.04",
+            "lemmas": [
+              "mellowness"
+            ],
+            "definition": "a soft shade of a color",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "richness.n.06",
+            "lemmas": [
+              "richness"
+            ],
+            "definition": "a strong deep vividness of hue",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "achromatic_color.n.01",
+        "lemmas": [
+          "achromatic_color",
+          "achromatic_colour"
+        ],
+        "definition": "a color lacking hue; white or grey or black",
+        "depth": 1,
+        "children": [
+          {
+            "name": "white.n.02",
+            "lemmas": [
+              "white",
+              "whiteness"
+            ],
+            "definition": "the quality or state of the achromatic color of greatest lightness (bearing the least resemblance to black)",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "gray.n.01",
+            "lemmas": [
+              "gray",
+              "grayness",
+              "grey",
+              "greyness"
+            ],
+            "definition": "a neutral achromatic color midway between white and black",
+            "depth": 2,
+            "children": []
+          },
+          {
+            "name": "black.n.01",
+            "lemmas": [
+              "black",
+              "blackness",
+              "inkiness"
+            ],
+            "definition": "the quality or state of the achromatic color of least lightness (bearing the least resemblance to white)",
+            "depth": 2,
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "nonsolid_color.n.01",
+        "lemmas": [
+          "nonsolid_color",
+          "nonsolid_colour",
+          "dithered_color",
+          "dithered_colour"
+        ],
+        "definition": "a color produced by a pattern of differently colored dots that together simulate the desired color",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "heather_mixture.n.01",
+        "lemmas": [
+          "heather_mixture",
+          "heather"
+        ],
+        "definition": "interwoven yarns of mixed colors producing muted greyish shades with flecks of color",
+        "depth": 1,
+        "children": []
+      },
+      {
+        "name": "mottle.n.01",
+        "lemmas": [
+          "mottle"
+        ],
+        "definition": "an irregular arrangement of patches of color",
+        "depth": 1,
+        "children": []
+      }
+    ]
+  }
+}

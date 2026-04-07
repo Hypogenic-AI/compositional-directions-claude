@@ -1,0 +1,92 @@
+[
+  {
+    "parent": "abstraction.n.06",
+    "parent_lemma": "abstraction",
+    "child": "measure.n.02",
+    "child_lemma": "measure"
+  },
+  {
+    "parent": "abstraction.n.06",
+    "parent_lemma": "abstraction",
+    "child": "communication.n.02",
+    "child_lemma": "communication"
+  },
+  {
+    "parent": "abstraction.n.06",
+    "parent_lemma": "abstraction",
+    "child": "set.n.02",
+    "child_lemma": "set"
+  },
+  {
+    "parent": "abstraction.n.06",
+    "parent_lemma": "abstraction",
+    "child": "attribute.n.02",
+    "child_lemma": "attribute"
+  },
+  {
+    "parent": "abstraction.n.06",
+    "parent_lemma": "abstraction",
+    "child": "psychological_feature.n.01",
+    "child_lemma": "psychological_feature"
+  },
+  {
+    "parent": "physical_entity.n.01",
+    "parent_lemma": "physical_entity",
+    "child": "thing.n.12",
+    "child_lemma": "thing"
+  },
+  {
+    "parent": "physical_entity.n.01",
+    "parent_lemma": "physical_entity",
+    "child": "causal_agent.n.01",
+    "child_lemma": "causal_agent"
+  },
+  {
+    "parent": "physical_entity.n.01",
+    "parent_lemma": "physical_entity",
+    "child": "process.n.06",
+    "child_lemma": "process"
+  },
+  {
+    "parent": "physical_entity.n.01",
+    "parent_lemma": "physical_entity",
+    "child": "substance.n.04",
+    "child_lemma": "substance"
+  },
+  {
+    "parent": "physical_entity.n.01",
+    "parent_lemma": "physical_entity",
+    "child": "matter.n.03",
+    "child_lemma": "matter"
+  },
+  {
+    "parent": "thing.n.08",
+    "parent_lemma": "thing",
+    "child": "stinker.n.02",
+    "child_lemma": "stinker"
+  },
+  {
+    "parent": "thing.n.08",
+    "parent_lemma": "thing",
+    "child": "pacifier.n.02",
+    "child_lemma": "pacifier"
+  },
+  {
+    "parent": "thing.n.08",
+    "parent_lemma": "thing",
+    "child": "whacker.n.01",
+    "child_lemma": "whacker"
+  },
+  {
+    "parent": "thing.n.08",
+    "parent_lemma": "thing",
+    "child": "freshener.n.01",
+    "child_lemma": "freshener"
+  },
+  {
+    "parent": "thing.n.08",
+    "parent_lemma": "thing",
+    "child": "jimdandy.n.02",
+    "child_lemma": "jimdandy"
+  }
+]

@@ -1,0 +1,17 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We systematically tested whether linear directions in the residual stream of \pythia compose under vector addition, evaluating 300 direction pairs across 25~concept categories with both geometric and functional metrics.
+Our central finding is that the boundary of compositionality coincides with the boundary of linearity itself.
+Morphological transformations form strong, compositional linear directions; encyclopedic associations form moderate ones; lexicographic semantic relations --- synonymy, antonymy, meronymy, hyponymy --- generally fail to form coherent linear directions at all, making the question of their compositionality moot.
+Among well-formed directions, composition via vector addition is remarkably robust, with functional steering achieving $>$96\% accuracy across all pair types.
+
+These results have direct implications for practitioners.
+Steering vectors for well-defined transformations (verb tenses, pluralization, simple semantic associations) can be composed with confidence.
+For abstract or relational concepts, practitioners should verify direction quality before attempting composition.
+The Composition Fidelity Score and compositionality taxonomy we introduce provide tools for making this assessment.
+
+Several directions remain open.
+Testing on larger models would reveal whether lexicographic relations become more linear as capacity increases.
+Extending the analysis to intermediate layers and behavioral concepts would broaden the scope of the compositionality map.
+Finally, developing harder steering benchmarks that avoid the ceiling effects we observe would enable finer-grained comparisons between pair types.

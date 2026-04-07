@@ -1,0 +1,22 @@
+# Keep dataset metadata and small samples, exclude large files
+# ---------------------------------------------------------------
+
+# WordNet NLTK raw data (downloadable via nltk.download)
+wordnet/nltk_data/
+
+# Large JSON task files from function_vectors (re-download from GitHub)
+# Keep only a few samples checked in
+function_vectors/abstractive/*.json
+function_vectors/extractive/*.json
+!function_vectors/abstractive/antonym.json
+!function_vectors/abstractive/english-french.json
+!function_vectors/abstractive/country-capital.json
+!function_vectors/extractive/color_v_animal_3.json
+
+# Google analogy full file (small enough to keep, ~600KB)
+# google_analogy/questions-words.txt
+
+# Any downloaded archives
+*.zip
+*.tar.gz
+*.tar.bz2

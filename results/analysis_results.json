@@ -1,0 +1,33 @@
+{
+  "stats": {
+    "H1": {
+      "within_ip_mean": 89.07319775523756,
+      "cross_ip_mean": 75.68291478441252,
+      "p_value": 0.00033397203416696443,
+      "cohens_d": 0.39037293185003913
+    },
+    "H2": {
+      "cross_cosine_mean": 0.06780524158687254,
+      "p_value": 1.1906938472601588e-34
+    },
+    "H3": {
+      "within_cfs_mean": 0.7349277427732533,
+      "cross_cfs_mean": 0.7058678525962567,
+      "p_value": 0.999983023350222,
+      "cohens_d": -0.46296606455972067
+    },
+    "H4": {
+      "pearson_r": 0.3333151513168802,
+      "p_value": 3.234955756693547e-09,
+      "spearman_rho": 0.3062398471094123,
+      "spearman_p": 6.208696844133668e-08
+    },
+    "orthogonality_cfs_corr": {
+      "pearson_r": 0.36990940194049393,
+      "p_value": 3.6796440441853955e-11
+    }
+  },
+  "summary_table": "| Metric | Within-Category | Cross-Category | Random Baseline |\n|--------|----------------|----------------|-----------------|\n| CFS (mean\u00b1std) | 0.735\u00b10.083 | 0.706\u00b10.031 | 0.707\u00b10.007 |\n| |Causal IP| (mean\u00b1std) | 89.073\u00b136.840 | 75.683\u00b131.559 | N/A |\n| Interference (mean\u00b1std) | 0.102\u00b10.070 | 0.044\u00b10.022 | 0.016\u00b10.003 |",
+  "n_within_pairs": 149,
+  "n_cross_pairs": 151
+}

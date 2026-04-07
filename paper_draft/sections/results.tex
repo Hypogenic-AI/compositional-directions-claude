@@ -1,0 +1,143 @@
+\section{Results}
+\label{sec:results}
+
+\subsection{Direction Quality Varies by Concept Type}
+\label{sec:quality}
+
+\Tabref{tab:direction_quality} reports leave-one-out consistency across the three concept types.
+Morphological relations achieve the highest consistency ($0.383 \pm 0.117$), followed by encyclopedic ($0.346 \pm 0.092$) and lexicographic ($0.194 \pm 0.081$).
+The difference between morphological and lexicographic directions is large and significant (Mann-Whitney $U = 48.0$, $p = 0.006$, Cohen's $d = 1.88$).
+
+\begin{table}[t]
+    \centering
+    \caption{Direction quality by concept type. \loo is the mean leave-one-out cosine similarity ($\pm$ std).
+    Categories with \loo $< 0.1$ are excluded from composition experiments.
+    Morphological relations form the strongest directions; seven of ten lexicographic categories fail the quality threshold entirely.}
+    \begin{tabular}{@{}lccc@{}}
+        \toprule
+        \textbf{Concept Type} & \textbf{\loo (mean $\pm$ std)} & \textbf{$N$ categories} & \textbf{Surviving filter} \\
+        \midrule
+        Morphological  & $\textbf{0.383} \pm 0.117$ & 17/18 & 17 \\
+        Encyclopedic   & $0.346 \pm 0.092$          & 5/5   & 5  \\
+        Lexicographic  & $0.194 \pm 0.081$          & 3/10  & 3 (7 excluded) \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:direction_quality}
+\end{table}
+
+The strongest individual directions are verb tense transformations: infinitive$\to$3pSg (\loo$= 0.63$), infinitive$\to$V\textsc{ing} ($0.47$), and infinitive$\to$V\textsc{ed} ($0.41$).
+Among encyclopedic concepts, thing$\to$color achieves $0.49$.
+In contrast, synonyms ($0.02$), antonyms ($-0.04$), and hyponyms ($0.01$) are essentially non-linear.
+This is our most important finding: {\bf the question ``which directions are compositional?'' is largely answered by ``which concepts have coherent linear representations in the first place.''}
+
+\Tabref{tab:taxonomy} provides a full taxonomy, grouping the 25~surviving categories and 7~excluded categories by quality level.
+
+\begin{table}[t]
+    \centering
+    \caption{Compositionality taxonomy. Categories are classified by \loo consistency into four tiers.
+    Strong and moderate directions compose reliably; weak directions compose with caveats; non-linear categories are excluded from composition analysis.}
+    \begin{tabular}{@{}lccccr@{}}
+        \toprule
+        \textbf{Quality} & \textbf{Criteria} & \textbf{Morph.} & \textbf{Encyc.} & \textbf{Lex.} & \textbf{Total} \\
+        \midrule
+        Strong      & \loo $> 0.4$    & 6  & 1 & 0 & 7  \\
+        Moderate    & \loo $\in [0.2, 0.4]$ & 10 & 4 & 1 & 15 \\
+        Weak        & \loo $\in [0.1, 0.2]$ & 1  & 0 & 2 & 3  \\
+        Non-linear  & \loo $< 0.1$    & 0  & 0 & 7 & 7  \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:taxonomy}
+\end{table}
+
+
+\subsection{Block-Diagonal Structure in Causal Inner Products}
+\label{sec:block_diagonal}
+
+\Tabref{tab:cip} compares the magnitude of causal inner products within and across concept categories.
+Within-category pairs show significantly higher $|\text{CIP}|$ ($89.07 \pm 36.84$) than cross-category pairs ($75.68 \pm 31.56$; Mann-Whitney $U$, $p = 3.3 \times 10^{-4}$, Cohen's $d = 0.39$).
+This confirms the block-diagonal structure observed by \citet{park2024linear}: related concepts share subspace structure, supporting hypothesis~H1.
+
+\begin{table}[t]
+    \centering
+    \caption{Causal inner product magnitudes. Within-category concept pairs show significantly higher values than cross-category pairs, confirming block-diagonal subspace structure.}
+    \begin{tabular}{@{}lccc@{}}
+        \toprule
+        \textbf{Metric} & \textbf{Within-category} & \textbf{Cross-category} & \textbf{$p$-value} \\
+        \midrule
+        $|\text{CIP}|$ (mean $\pm$ std) & $\textbf{89.07} \pm 36.84$ & $75.68 \pm 31.56$ & $3.3 \times 10^{-4}$ \\
+        Cohen's $d$ & \multicolumn{3}{c}{0.39 (small-to-medium)} \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:cip}
+\end{table}
+
+
+\subsection{Composition Fidelity and the Orthogonality Paradox}
+\label{sec:cfs_results}
+
+\Tabref{tab:cfs} presents \cfs and interference scores for within-category, cross-category, and random-baseline direction pairs.
+Two findings stand out.
+
+\begin{table}[t]
+    \centering
+    \caption{Geometric composition metrics. \cfs measures preservation of both components under addition; interference measures cross-concept contamination.
+    Within-category pairs achieve higher \cfs but also higher interference, revealing a tradeoff.
+    The random baseline corresponds to uniformly sampled unit vectors.}
+    \begin{tabular}{@{}lccr@{}}
+        \toprule
+        \textbf{Metric} & \textbf{Within-cat.} & \textbf{Cross-cat.} & \textbf{Random} \\
+        \midrule
+        \cfs (mean $\pm$ std) & $\textbf{0.735} \pm 0.083$ & $0.706 \pm 0.031$ & $0.707 \pm 0.007$ \\
+        Interference          & $0.102 \pm 0.070$          & $0.044 \pm 0.022$ & $\textbf{0.016} \pm 0.003$ \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:cfs}
+\end{table}
+
+\para{Within-category \cfs exceeds cross-category.}
+This contradicts our hypothesis~H3, which predicted that orthogonal (cross-category) pairs would compose better.
+The explanation is geometric: when $\cos(\vd_A, \vd_B) > 0$, the sum $\vd_A + \vd_B$ is \emph{closer} to each component than when the directions are orthogonal, inflating \cfs.
+The baseline \cfs for perfectly orthogonal directions is exactly $1/\sqrt{2} \approx 0.707$, and within-category pairs exceed this because their directions are partially aligned.
+
+\para{Interference tradeoff.}
+Within-category pairs show $2.3\times$ higher interference ($0.102$ vs.\ $0.044$).
+The correlation between \cfs and interference is positive ($r = 0.33$, $p = 3.2 \times 10^{-9}$): the same alignment that boosts geometric fidelity also increases cross-concept contamination.
+This reveals two distinct senses of ``compositionality'': geometric preservation (high \cfs) and functional independence (low interference), which cannot be simultaneously maximized.
+
+Additional correlations illuminate the structure:
+\begin{itemize}[leftmargin=*,itemsep=0pt,topsep=0pt]
+    \item $|\cos(\vd_A, \vd_B)|$ vs.\ \cfs: $r = 0.37$, $p = 3.7 \times 10^{-11}$ (more aligned $\to$ higher \cfs).
+    \item \loo vs.\ interference: $r = 0.36$, $p = 1.9 \times 10^{-10}$ (stronger directions produce more interference).
+    \item \loo vs.\ \cfs: $r = 0.01$, $p = 0.80$ (direction quality does not predict geometric \cfs).
+\end{itemize}
+
+
+\subsection{Functional Steering Composition}
+\label{sec:steering}
+
+\Tabref{tab:steering} reports functional steering accuracy for single and composed directions.
+Across all pair types, composed directions $\vd_A + \vd_B$ maintain $>$96\% accuracy on both target concepts.
+The maximum accuracy drop from single to composed steering is 3.5~percentage points (within-encyclopedic, concept~A: $1.000 \to 0.965$).
+
+\begin{table}[t]
+    \centering
+    \caption{Functional steering accuracy. Single-direction accuracy and composed-direction accuracy ($\vd_A + \vd_B$) for both concepts are shown. Composition success is the minimum of composed accuracies.
+    Steering composition is robust across all pair types, with $>$96\% accuracy everywhere.}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}lccccc@{}}
+        \toprule
+        \textbf{Pair type} & \textbf{Single A} & \textbf{Single B} & \textbf{Composed A} & \textbf{Composed B} & \textbf{Comp.\ success} \\
+        \midrule
+        Within-morphological   & 1.000 & 0.997 & 1.000 & 0.993 & \textbf{0.997} \\
+        Within-encyclopedic    & 1.000 & 1.000 & 0.965 & 1.000 & 0.982 \\
+        Cross-morph-encyc      & 1.000 & 1.000 & 0.998 & 0.994 & 0.996 \\
+        Cross-morph-lex        & 1.000 & 0.976 & 0.996 & 0.976 & 0.986 \\
+        \bottomrule
+    \end{tabular}
+    }
+    \label{tab:steering}
+\end{table}
+
+This near-ceiling performance contrasts with the nuanced geometric picture from \secref{sec:cfs_results}.
+Despite within-category pairs showing 2.3$\times$ more interference geometrically, the interference magnitude ($\sim$0.1) is small enough that functional steering is not meaningfully degraded.
+In the unembedding space, all directions that pass the \loo quality filter are effectively compositional for steering purposes, regardless of whether they are aligned or orthogonal.

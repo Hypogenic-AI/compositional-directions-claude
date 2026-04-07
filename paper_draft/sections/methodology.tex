@@ -1,0 +1,67 @@
+\section{Methodology}
+\label{sec:method}
+
+\subsection{Model and Data}
+\label{sec:model_data}
+
+We use \pythia~\citep{biderman2023pythia}, a 2.8-billion-parameter autoregressive Transformer with a 2560-dimensional residual stream and a vocabulary of 50{,}304 tokens.
+We choose Pythia for its open access, well-studied behavior, and comparable scale to models used in prior work on linear representations~\citep{park2024linear}.
+
+For concept definitions we use \bats~\citep{gladkova2016analogy}, which provides counterfactual word pairs across 40~categories of morphological, encyclopedic, and lexicographic relations (\eg ``cat''$\to$``cats'' for noun pluralization, ``France''$\to$``Paris'' for country$\to$capital).
+We filter to pairs where both base and target words are single tokens in Pythia's vocabulary, retaining 32~categories with at least 5~valid pairs.
+After quality filtering (\loo consistency $> 0.1$; see \secref{sec:metrics}), 25~categories remain: 17~morphological, 5~encyclopedic, and 3~lexicographic.
+Seven lexicographic categories (including synonyms, antonyms, and hyponyms) are excluded because they fail to form coherent linear directions.
+
+\subsection{Direction Extraction}
+\label{sec:extraction}
+
+Following \citet{park2024linear}, we extract concept directions from the unembedding matrix $\Wu \in \R^{50304 \times 2560}$.
+For a concept~$C$ defined by counterfactual token pairs $\{(\text{base}_i, \text{target}_i)\}_{i=1}^{n}$, the concept direction is:
+\begin{equation}
+\label{eq:direction}
+\vd_C = \frac{1}{n} \sum_{i=1}^{n} \frac{\Wu[\text{target}_i] - \Wu[\text{base}_i]}{\|\Wu[\text{target}_i] - \Wu[\text{base}_i]\|},
+\end{equation}
+where $\Wu[t] \in \R^{2560}$ is the unembedding vector for token~$t$.
+Each difference vector is $\ell_2$-normalized before averaging to prevent high-frequency tokens from dominating.
+The final direction~$\vd_C$ is then normalized to unit length.
+
+\subsection{Evaluation Metrics}
+\label{sec:metrics}
+
+We evaluate direction quality and compositionality with five metrics.
+
+\para{Leave-one-out consistency (\loo).}
+For each pair~$i$ in concept~$C$, we compute the direction $\vd_C^{-i}$ from all pairs except~$i$, then measure $\cos(\Wu[\text{target}_i] - \Wu[\text{base}_i],\; \vd_C^{-i})$.
+The \loo score is the mean across all held-out pairs.
+High \loo indicates the concept has a single coherent direction; low \loo indicates different pairs point in different directions.
+We exclude categories with \loo $< 0.1$ from composition experiments.
+
+\para{Causal inner product (\cip).}
+Following \citet{park2024linear}, we compute $\langle \vd_A, \vd_B \rangle_C = \vd_A^\top \mSigma^{-1} \vd_B$, where $\mSigma$ is the covariance matrix of the direction vectors.
+The \cip measures causal relatedness: high values indicate shared subspace structure; near-zero values indicate causal separability.
+
+\para{Composition Fidelity Score (\cfs).}
+We define \cfs as the geometric mean of the cosine similarities between the composed direction and each component:
+\begin{equation}
+\label{eq:cfs}
+\text{CFS}(\vd_A, \vd_B) = \sqrt{\cos(\vd_A + \vd_B,\, \vd_A) \cdot \cos(\vd_A + \vd_B,\, \vd_B)}.
+\end{equation}
+A \cfs of $1/\sqrt{2} \approx 0.707$ corresponds to orthogonal directions (the baseline for independent composition); higher values indicate reinforcement, lower values indicate destructive interference.
+
+\para{Interference score.}
+For a pair of concepts $(A, B)$, we measure cross-concept contamination as $\text{Interference}(A, B) = \frac{1}{n_B}\sum_{i=1}^{n_B} |\cos(\Wu[\text{target}_{B,i}] - \Wu[\text{base}_{B,i}],\; \vd_A)|$.
+Low interference means steering with~$\vd_A$ does not affect concept~$B$'s pairs.
+
+\para{Functional steering accuracy.}
+We test whether adding $\alpha \cdot \vd$ to a token's final hidden state increases the target token's logit.
+For a composed direction $\vd_A + \vd_B$, we check accuracy on both concept~$A$ and concept~$B$ pairs separately.
+Composition succeeds when the composed direction maintains high accuracy on both concepts.
+
+\subsection{Experimental Design}
+\label{sec:design}
+
+We test 300~unique direction pairs: 149~within-category (both directions from the same concept type, \eg two morphological directions) and 151~cross-category (directions from different types, \eg morphological + encyclopedic).
+For each pair, we compute all five metrics above.
+We compare within-category vs.\ cross-category results using Mann-Whitney~$U$ tests and report Cohen's~$d$ effect sizes.
+Correlations between metrics are assessed with both Pearson and Spearman coefficients.
+All experiments use a fixed random seed of~42.

@@ -1,0 +1,83 @@
+{
+  "type_loo_stats": {
+    "morphological": {
+      "mean": 0.38346461339620397,
+      "std": 0.11705636776564377,
+      "n": 17
+    },
+    "encyclopedic": {
+      "mean": 0.3459270924720722,
+      "std": 0.09193727142136711,
+      "n": 5
+    },
+    "lexicographic": {
+      "mean": 0.19400671963837654,
+      "std": 0.0811976925450465,
+      "n": 3
+    }
+  },
+  "quality_composition_correlation": {
+    "r_quality_cfs": 0.01472410089631859,
+    "p_quality_cfs": 0.7995125431354262,
+    "r_quality_interference": 0.356993840171306,
+    "p_quality_interference": 1.9079235492109753e-10
+  },
+  "steering_by_type": {
+    "cross-morph-encyc": {
+      "n": 15,
+      "efficiency_mean": 0.9961111111111111,
+      "efficiency_std": 0.010371197056996915,
+      "interference_A_mean": 0.002222222222222222,
+      "interference_B_mean": 0.0055555555555555506,
+      "composition_success_mean": 0.9961111111111111
+    },
+    "cross-morph-lex": {
+      "n": 15,
+      "efficiency_mean": 0.998256704980843,
+      "efficiency_std": 0.02296381975964253,
+      "interference_A_mean": 0.004444444444444444,
+      "interference_B_mean": -0.000888888888888902,
+      "composition_success_mean": 0.986
+    },
+    "within-encyclopedic": {
+      "n": 5,
+      "efficiency_mean": 0.9823529411764707,
+      "efficiency_std": 0.02352941176470589,
+      "interference_A_mean": 0.03529411764705883,
+      "interference_B_mean": 0.0,
+      "composition_success_mean": 0.9823529411764707
+    },
+    "within-morphological": {
+      "n": 10,
+      "efficiency_mean": 0.9983333333333334,
+      "efficiency_std": 0.004999999999999982,
+      "interference_A_mean": 0.0,
+      "interference_B_mean": 0.0033333333333333327,
+      "composition_success_mean": 0.9966666666666668
+    }
+  },
+  "taxonomy_counts": {
+    "strong": {
+      "total": 7,
+      "types": {
+        "encyclopedic": 1,
+        "morphological": 6
+      }
+    },
+    "moderate": {
+      "total": 15,
+      "types": {
+        "morphological": 10,
+        "encyclopedic": 4,
+        "lexicographic": 1
+      }
+    },
+    "weak": {
+      "total": 3,
+      "types": {
+        "morphological": 1,
+        "lexicographic": 2
+      }
+    }
+  }
+}

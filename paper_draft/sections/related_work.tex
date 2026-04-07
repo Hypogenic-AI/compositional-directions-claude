@@ -1,0 +1,32 @@
+\section{Related Work}
+\label{sec:related}
+
+\para{Linear representations in LLMs.}
+The observation that concepts correspond to directions in neural network activation spaces dates back to word embeddings~\citep{mikolov2013efficient} and has been formalized for LLMs by \citet{park2024linear}, who define three notions of linear representation (subspace, measurement, intervention) and unify them through a \emph{causal inner product}.
+They show that causally separable concepts yield orthogonal directions, and demonstrate block-diagonal structure among related concepts in LLaMA-2-7B.
+\citet{park2024geometry} extend this framework to categorical and hierarchical concepts, proving that hierarchical relationships decompose into orthogonal sub-directions.
+We build on their direction extraction methodology and causal inner product, but focus on a question they do not address: whether independently extracted directions compose under addition.
+
+\para{Steering vectors and representation engineering.}
+\citet{zou2023representation} introduce representation engineering, extracting ``reading vectors'' for high-level behavioral concepts (honesty, fairness) via contrastive pairs and using them as steering vectors.
+\citet{panickssery2023steering} refine this approach with Contrastive Activation Addition for behavioral concepts like sycophancy.
+Both lines of work demonstrate that steering with single directions is effective, but neither systematically tests multi-direction composition.
+Our functional steering experiments directly address this gap, testing whether composed directions $\vd_A + \vd_B$ preserve both effects.
+
+\para{Function vectors and composition.}
+Most directly relevant to our work, \citet{todd2024function} discover that in-context learning tasks are encoded as compact function vectors extractable from causal attention heads.
+They show that function vectors obey vector algebra for some task compositions (\eg $\text{Last-Capital} \approx \text{Last-Copy} + \text{First-Capital} - \text{First-Copy}$) but fail for others.
+Our study differs in three ways: (1)~we test composition across a much broader taxonomy of 25~concept types rather than a handful of composed tasks, (2)~we use the unembedding space rather than intermediate attention heads, and (3)~we introduce quantitative metrics (CFS, interference scores) that measure \emph{degree} of compositionality rather than treating it as binary.
+
+\para{Format dependence of directions.}
+\citet{opielka2026causality} show that function vectors extracted via activation patching are not format-invariant: the same concept extracted from open-ended vs.\ multiple-choice formats yields nearly orthogonal directions.
+They introduce \emph{concept vectors} via representational similarity analysis that are format-invariant.
+This finding underscores that ``linear direction'' is not a monolithic notion --- the extraction method and context matter.
+Our use of the unembedding matrix, which is a fixed model parameter rather than a context-dependent activation, sidesteps format dependence but is limited to concepts expressible through single-token contrasts.
+
+\para{Superposition and interference.}
+\citet{elhage2022superposition} demonstrate in toy models that networks pack more features than they have dimensions by encoding them as nearly-orthogonal directions in a lower-dimensional space.
+This \emph{superposition} introduces interference: activating one direction partially activates others.
+\citet{bereska2025superposition} provide an information-theoretic framework connecting superposition to adversarial vulnerability, and \citet{hanni2024computational} study computational superposition during inference.
+Superposition is a key mechanism by which composition could fail, and our interference metric directly measures this effect.
+Our finding that lexicographic relations fail to form coherent directions is consistent with these relations being encoded in highly superposed, distributed representations.

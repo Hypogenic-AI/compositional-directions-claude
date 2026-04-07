@@ -1,0 +1,34 @@
+\section{Introduction}
+\label{sec:intro}
+
+A growing body of work shows that Transformer language models encode high-level concepts as linear directions in their residual streams~\citep{park2024linear,zou2023representation,todd2024function}.
+This observation --- the \emph{linear representation hypothesis} --- has become foundational: linear probes detect features, steering vectors edit behavior, and activation patching identifies causal structure, all by assuming that concepts live on straight lines in activation space.
+
+A natural follow-up question arises: {\bf do these directions compose?}
+If a model encodes ``plural'' as direction~$\vd_P$ and ``past tense'' as direction~$\vd_T$, does the sum $\vd_P + \vd_T$ simultaneously achieve both effects?
+Additive composition would mean that the set of linear directions forms a compositional subspace --- a far stronger claim than linearity alone, and one with direct practical consequences for multi-concept steering and interpretability.
+
+Existing evidence is mixed.
+\citet{park2024linear} show that causally separable concepts are orthogonal, and \citet{park2024geometry} prove that hierarchical concepts decompose into orthogonal sub-directions, suggesting compositional structure.
+\citet{todd2024function} demonstrate that some function vectors compose via vector algebra while others fail, but test only a handful of compositions without systematically mapping the boundary.
+Meanwhile, \citet{elhage2022superposition} show that superposition packs many features into shared dimensions, raising the possibility that interference prevents clean composition.
+No prior work has drawn a systematic map of \emph{which} types of directions compose and which do not.
+
+We close this gap.
+Using 25~concept categories from \bats~\citep{gladkova2016analogy} spanning morphological, encyclopedic, and lexicographic relations, we extract concept directions from the unembedding matrix of \pythia~\citep{biderman2023pythia} and test their compositionality through geometric analysis and functional steering experiments.
+Our key finding is surprisingly simple: {\bf the directions that form coherent linear representations in the first place are all compositional.}
+Morphological transformations (verb tenses, pluralization) yield strong, consistent directions that compose freely via vector addition.
+Encyclopedic associations (color, gender) are moderate.
+Lexicographic relations (synonyms, antonyms, meronyms) mostly \emph{fail to form coherent linear directions at all} --- seven of ten categories have leave-one-out consistency below~0.1.
+The real boundary is not between ``compositional'' and ``non-compositional'' directions, but between concepts that have linear representations and concepts that do not.
+
+Among well-formed directions, functional steering with the composed direction $\vd_A + \vd_B$ achieves $>$96\% accuracy on both target concepts across all tested pair types.
+Within-category pairs show higher geometric fidelity but also 2.3$\times$ more interference than cross-category pairs, revealing a tension between two senses of ``compositionality'' that we analyze in detail.
+
+We make the following contributions:
+\begin{itemize}[leftmargin=*,itemsep=0pt,topsep=0pt]
+    \item We conduct the first systematic study of direction compositionality across a broad taxonomy of concept types (morphological, encyclopedic, lexicographic), testing 300 direction pairs with both geometric and functional metrics.
+    \item We introduce the \emph{Composition Fidelity Score} (\cfs), a geometric measure of how well both component directions are preserved under vector addition, and show that it reveals a tradeoff between geometric preservation and functional interference.
+    \item We establish that the boundary of compositionality coincides with the boundary of linearity: concepts that form coherent linear directions compose reliably, while those that do not form linear directions cannot be composed in the first place.
+    \item We provide a compositionality taxonomy that classifies 25~concept categories into strong, moderate, weak, and non-linear tiers, offering practitioners a guide to when additive steering can be trusted.
+\end{itemize}

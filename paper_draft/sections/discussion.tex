@@ -1,0 +1,72 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{The Boundary of Compositionality Is the Boundary of Linearity}
+
+Our results point to a surprisingly clean answer to the question ``which linear directions are compositional?''
+The directions that form coherent linear representations compose reliably; those that do not form coherent directions cannot be composed at all.
+The real divide is not between ``compositional'' and ``non-compositional'' linear directions --- it is between concepts that are linearly represented and concepts that are not.
+
+Morphological transformations (verb tenses, pluralization, derivational morphology) are the prototypical compositional directions.
+They encode regular, functional transformations with consistent behavior across word pairs, producing \loo scores above~0.3 and near-perfect steering composition.
+Encyclopedic associations (country$\to$capital, thing$\to$color) are moderately linear and compose adequately.
+Lexicographic semantic relations (synonymy, antonymy, meronymy, hyponymy) fail because ``synonym'' is not a single transformation --- the direction from ``big'' to ``large'' is fundamentally different from the direction from ``fast'' to ``quick.''
+These relations are better understood as \emph{family-resemblance categories} that lack a unifying direction.
+
+\subsection{Why Lexicographic Relations Fail}
+
+Three factors likely explain the near-zero \loo consistency of lexicographic relations.
+First, these are not \emph{single transformations}: unlike ``make plural,'' which applies a consistent morphological operation, ``find a synonym'' requires different operations for each word.
+Second, \emph{superposition}: as \citet{elhage2022superposition} show, infrequent or complex features may be encoded in superposed, distributed representations rather than clean directions.
+Lexicographic relations span diverse semantic fields and are unlikely to be compressed into a single direction.
+Third, \emph{context-dependence}: \citet{opielka2026causality} demonstrate that the extracted direction for a concept can depend on the format of extraction.
+Lexicographic relations may be especially sensitive to this effect because they are defined relationally rather than functionally.
+
+\subsection{Two Senses of Compositionality}
+
+Our metrics reveal a tension between two senses of ``compositionality'' that the literature has not clearly distinguished:
+
+\para{Geometric composition.}
+The sum $\vd_A + \vd_B$ preserves both component directions as measured by \cfs.
+This is \emph{easier} for aligned directions (within-category): when $\vd_A \cdot \vd_B > 0$, the sum is closer to each component than when the directions are orthogonal, producing higher \cfs.
+However, alignment also means that each direction partially activates the other, increasing interference.
+
+\para{Functional composition.}
+Steering with $\vd_A + \vd_B$ achieves both intended effects without degrading either.
+This works well for both aligned and orthogonal directions, as long as both individual directions are coherent.
+The practical implication is clear: {\bf steering vector composition works in the regime where individual directions are well-formed (\loo $> 0.2$), regardless of whether the directions are aligned or orthogonal.}
+
+\subsection{Connection to Prior Work}
+
+Our causal inner product analysis confirms the block-diagonal structure reported by \citet{park2024linear}, extending their finding to show that this structure holds for morphological and encyclopedic concepts but degrades for lexicographic relations.
+The finding that ``some function vectors compose and some don't''~\citep{todd2024function} aligns with our taxonomy: the compositions that work involve well-defined functional transformations (our morphological categories), while those that fail likely involve poorly defined directions.
+\citet{elhage2022superposition}'s superposition framework explains why lexicographic relations do not form clean directions --- they are encoded in distributed, superposed representations that resist extraction into single vectors.
+
+\subsection{Limitations}
+\label{sec:limitations}
+
+Our study has several limitations that constrain the scope of our conclusions.
+
+\para{Single model.}
+We test only \pythia.
+Larger models may resolve superposition for some concepts~\citep{elhage2022superposition}, potentially making lexicographic relations more linear.
+Architecturally different models (mixture-of-experts, state-space models) may organize representations differently.
+
+\para{Unembedding space only.}
+We extract directions from the unembedding matrix rather than intermediate layers.
+Composition structure may differ across layers, and intermediate representations may capture concepts that the unembedding space does not.
+
+\para{Limited concept coverage.}
+\bats covers morphological and basic semantic relations but not the abstract behavioral concepts (honesty, sycophancy) tested in the steering literature~\citep{zou2023representation,panickssery2023steering}.
+Whether our findings extend to behavioral concepts remains an open question.
+
+\para{Ceiling effects in steering.}
+Functional steering accuracy exceeds 96\% everywhere, providing little discriminative power between pair types.
+Harder steering tasks or finer-grained metrics (logit shift magnitude, rank changes) would enable more nuanced comparisons.
+
+\para{Single-token constraint.}
+Requiring both words to be single tokens limits the available pairs and may introduce selection bias toward shorter, more common words.
+
+\para{No ground truth.}
+We define compositionality operationally through \cfs and steering accuracy.
+There is no established ground-truth benchmark for direction compositionality, making it difficult to validate our metrics independently.

@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "stages": {
+    "resource_finder": {
+      "success": true,
+      "completion_marker": "/workspaces/compositional-directions-claude/.resource_finder_complete",
+      "outputs": {
+        "literature_review": "/workspaces/compositional-directions-claude/literature_review.md",
+        "resources_catalog": "/workspaces/compositional-directions-claude/resources.md",
+        "papers_dir": "/workspaces/compositional-directions-claude/papers",
+        "datasets_dir": "/workspaces/compositional-directions-claude/datasets",
+        "code_dir": "/workspaces/compositional-directions-claude/code"
+      },
+      "log_file": "/workspaces/compositional-directions-claude/logs/resource_finder_claude.log",
+      "transcript_file": "/workspaces/compositional-directions-claude/logs/resource_finder_claude_transcript.jsonl",
+      "elapsed_time": 862.2726521492004
+    },
+    "experiment_runner": {
+      "success": true,
+      "return_code": 0,
+      "elapsed_time": 1165.9345779418945,
+      "log_file": "/workspaces/compositional-directions-claude/logs/execution_claude.log",
+      "transcript_file": "/workspaces/compositional-directions-claude/logs/execution_claude_transcript.jsonl"
+    }
+  },
+  "work_dir": "/workspaces/compositional-directions-claude"
+}

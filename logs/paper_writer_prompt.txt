@@ -1,0 +1,761 @@
+You are an academic paper writer. Generate a complete NEURIPS style paper
+based on the experiment results provided.
+
+════════════════════════════════════════════════════════════════════════════════
+                         IMPORTANT: BEFORE YOU START
+════════════════════════════════════════════════════════════════════════════════
+
+Before writing any content, you MUST complete these steps:
+
+1. READ THE SKILL: Review the paper-writer skill at .claude/skills/paper-writer/SKILL.md
+2. READ THE STYLE GUIDE: Study templates/paper_writing/lab_style_guide.md carefully
+3. REVIEW EXAMPLES: Browse paper_examples/ for formatting and language patterns:
+   - Look at sections/1.introduction.tex for language style
+   - Look at tables/*.tex for table formatting
+   - Look at commands/*.tex for macro usage
+4. VERIFY COMMAND TEMPLATES: Command templates (math.tex, general.tex, macros.tex) are pre-copied to paper_draft/commands/
+
+CRITICAL: Reference example papers for FORMATTING and LANGUAGE STYLE only.
+Do NOT copy content, phrasing, or narrative structure from the example papers.
+The examples are in a different research domain - focus only on presentation style.
+
+════════════════════════════════════════════════════════════════════════════════
+                            EXPERIMENT REPORT
+════════════════════════════════════════════════════════════════════════════════
+
+# Which Linear Directions Are Compositional?
+
+## 1. Executive Summary
+
+We systematically tested whether linear directions extracted from the residual stream of a Transformer LLM (Pythia-2.8B) form compositional subspaces. Using 25 concept categories from BATS 3.0 spanning morphological, encyclopedic, and lexicographic relations, we extracted concept directions via the mean-difference method and tested their compositionality through geometric analysis (causal inner products, composition fidelity scores) and functional steering experiments. Our key finding is that **compositionality is not a property of direction pairs but of direction quality**: morphological concepts form strong linear directions (LOO consistency 0.38 ± 0.12) that compose well both geometrically and functionally, encyclopedic concepts are moderate (LOO 0.35 ± 0.09), and lexicographic relations (synonyms, antonyms, meronyms) mostly fail to form coherent linear directions at all (many LOO &lt; 0.1, excluded from analysis). Within the space of well-formed directions, composition via vector addition is remarkably robust — functional steering with composed directions d_A + d_B achieves &gt;96% accuracy across all tested pair types, with minimal cross-concept interference.
+
+## 2. Research Question &amp; Motivation
+
+**Hypothesis**: Not all linear directions in the residual stream form coherent subspaces that can be composed; related vectors may compose naturally while others may only appear linear in limited contexts.
+
+**Why this matters**: The linear representation hypothesis underpins key interpretability techniques (linear probing, steering vectors, activation editing). If directions don&#39;t compose reliably, these tools have fundamental limits that practitioners must understand. Prior work showed block-diagonal structure (Park et al. 2024), some function vectors compose while others don&#39;t (Todd et al. 2024), and superposition can interfere with clean representation (Elhage et al. 2022). However, no systematic map existed of *which* types of directions are compositional.
+
+**Gap**: No prior work tested composition across a broad taxonomy of concept types with both geometric and functional metrics.
+
+## 3. Methodology
+
+### Model
+- **Pythia-2.8B** (EleutherAI), 2560-dimensional residual stream, 50304-token vocabulary
+- Chosen for: open access (no gated repo), well-studied, similar scale to models in prior work
+- Hardware: NVIDIA RTX A6000 (49GB), CUDA 12.5
+
+### Data
+- **BATS 3.0** (Gladkova et al. 2016): 40 concept categories with counterfactual word pairs
+- After filtering to single-token pairs in Pythia&#39;s tokenizer: 32 categories with ≥5 pairs
+- After quality filtering (LOO &gt; 0.1): 25 categories (17 morphological, 5 encyclopedic, 3 lexicographic)
+- Total unique concept direction pairs tested: 300 (149 within-category, 151 cross-category)
+
+### Direction Extraction
+Following Park et al. (2024), concept directions are extracted from the unembedding matrix W_U ∈ ℝ^{50304 × 2560}:
+
+```
+d_concept = normalize(mean(W_U[target_i] - W_U[base_i]))
+```
+
+where (base_i, target_i) are counterfactual token pairs (e.g., &#34;cat&#34;→&#34;cats&#34; for noun-plural).
+
+### Metrics
+1. **Leave-One-Out (LOO) Consistency**: Cosine similarity between a held-out pair&#39;s difference vector and the direction from remaining pairs. Measures whether the concept has a single coherent direction.
+2. **Causal Inner Product**: d_A^T Cov^{-1} d_B using the whitened inner product from Park et al. (2024). Measures causal relationship between concept directions.
+3. **Composition Fidelity Score (CFS)**: geometric_mean(cos(d_A+d_B, d_A), cos(d_A+d_B, d_B)). Measures whether both components are preserved in composition.
+4. **Interference Score**: Mean |cos(diff_B, d_A)| over B&#39;s pairs. Measures cross-concept contamination.
+5. **Functional Steering Accuracy**: Whether adding α·d to a token&#39;s final hidden state increases the target token&#39;s logit. Tests actual behavioral effect.
+
+### Statistical Tests
+- Mann-Whitney U tests for group comparisons
+- Pearson and Spearman correlations
+- Cohen&#39;s d for effect sizes
+- Significance level: α = 0.05
+
+### Reproducibility
+- Random seed: 42 (all sources)
+- Python 3.12.8, PyTorch 2.4.0+cu121, transformers 5.5.0
+- Full results saved in `results/` directory
+
+## 4. Results
+
+### 4.1 Direction Quality Varies Dramatically by Concept Type
+
+| Concept Type | LOO Consistency (mean±std) | N categories | Categories surviving filter |
+|---|---|---|---|
+| Morphological | 0.383 ± 0.117 | 17/18 | 17 |
+| Encyclopedic | 0.346 ± 0.092 | 5/5 | 5 |
+| Lexicographic | 0.194 ± 0.081 | 3/10 | 3 (7 excluded) |
+
+**Key finding**: Morphological relations (verb tenses, noun plurals, derivational morphology) form the strongest linear directions. Lexicographic relations (synonyms, antonyms, meronyms, hyponyms) mostly *fail* to form coherent linear directions — 7 of 10 categories had LOO &lt; 0.1 and were excluded. This is the most important result: the question &#34;which directions are compositional?&#34; is largely answered by &#34;which concepts have coherent linear representations in the first place?&#34;
+
+Statistical test (morphological vs. lexicographic): Mann-Whitney U = 48.0, p = 0.006, Cohen&#39;s d = 1.88 (large effect).
+
+### 4.2 Block-Diagonal Structure in Causal Inner Products
+
+| Metric | Within-Category | Cross-Category | p-value | Cohen&#39;s d |
+|---|---|---|---|---|
+| \|Causal IP\| | 89.07 ± 36.84 | 75.68 ± 31.56 | 3.3×10⁻⁴ | 0.39 |
+
+Within-category concept pairs (e.g., two morphological relations) show significantly higher causal inner products than cross-category pairs, confirming the block-diagonal structure observed by Park et al. (2024). This supports **H1**: related concepts share subspace structure.
+
+### 4.3 Composition Fidelity and the Orthogonality Paradox
+
+| Metric | Within-Category | Cross-Category | Random Baseline |
+|---|---|---|---|
+| CFS (mean±std) | 0.735 ± 0.083 | 0.706 ± 0.031 | 0.707 ± 0.007 |
+| Interference | 0.102 �� 0.070 | 0.044 ± 0.022 | 0.016 ± 0.003 |
+
+**Surprising finding**: Within-category CFS is *higher* than cross-category, contradicting **H3** (which predicted orthogonal pairs would compose better). The explanation is that CFS measures geometric preservation in the sum, and aligned vectors reinforce each other (cos(d_A+d_B, d_A) &gt; 1/√2 when d_A·d_B &gt; 0). However, within-category pairs also show 2.3× higher interference — the tradeoff between geometric CFS and functional interference reveals two distinct senses of &#34;compositionality.&#34;
+
+Correlations:
+- |Cosine similarity| vs CFS: r = 0.37, p = 3.7×10⁻¹¹ (more aligned → higher CFS)
+- Interference vs CFS: r = 0.33, p = 3.2×10⁻⁹ (more interference → higher CFS)
+- Quality (LOO) vs interference: r = 0.36, p = 1.9×10⁻¹⁰ (stronger directions → more interference)
+- Quality (LOO) vs CFS: r = 0.01, p = 0.80 (no relationship)
+
+### 4.4 Functional Steering Composition
+
+| Pair Type | Single A Acc | Single B Acc | Composed A Acc | Composed B Acc | Composition Success |
+|---|---|---|---|---|---|
+| Within-morphological | 1.000 | 0.997 | 1.000 | 0.993 | 0.997 |
+| Within-encyclopedic | 1.000 | 1.000 | 0.965 | 1.000 | 0.982 |
+| Cross-morph-encyc | 1.000 | 1.000 | 0.998 | 0.994 | 0.996 |
+| Cross-morph-lex | 1.000 | 0.976 | 0.996 | 0.976 | 0.986 |
+
+**Key finding**: Functional composition via steering is remarkably robust. Adding the composed direction d_A + d_B achieves &gt;96% accuracy on both concepts across all pair types. The maximum interference observed (within-encyclopedic: 0.12) is small. This suggests that in the unembedding space, the directions that survive quality filtering are all effectively compositional for steering purposes.
+
+### 4.5 Compositionality Taxonomy
+
+| Quality Level | Criteria | Morphological | Encyclopedic | Lexicographic | Total |
+|---|---|---|---|---|---|
+| **Strong** | LOO &gt; 0.4 | 6 | 1 | 0 | 7 |
+| **Moderate** | LOO 0.2–0.4 | 10 | 4 | 1 | 15 |
+| **Weak** | LOO 0.1–0.2 | 1 | 0 | 2 | 3 |
+| **Non-linear** | LOO &lt; 0.1 | 0 | 0 | 7 | 7 (excluded) |
+
+The strongest linear directions are verb tense transformations (inf→3pSg: LOO=0.63, inf→Ving: LOO=0.47, inf→Ved: LOO=0.41) and color associations (things→color: LOO=0.49). Lexicographic relations like synonyms (LOO=0.02), antonyms (LOO=-0.04), and hyponyms (LOO=0.01) are essentially non-linear.
+
+## 5. Analysis &amp; Discussion
+
+### Answer to the Research Question
+
+**Which linear directions are compositional?** The answer is simpler than expected: the directions that form *coherent linear representations in the first place* are all compositional. The real boundary is not between &#34;compositional&#34; and &#34;non-compositional&#34; linear directions — it is between concepts that have linear representations and concepts that don&#39;t.
+
+Specifically:
+- **Morphological transformations** (verb tenses, pluralization, derivational affixes) are the most reliably linear and compose freely via vector addition
+- **Encyclopedic associations** (color, gender, animal properties) are moderately linear and compose adequately
+- **Lexicographic semantic relations** (synonymy, antonymy, meronymy, hyponymy) are *not well-represented as linear directions* in the unembedding space — the concept of composing them doesn&#39;t arise because the individual directions are not coherent
+
+### Why Lexicographic Relations Fail
+
+Lexicographic relations (synonyms, antonyms, etc.) have near-zero LOO consistency, meaning different word pairs in the same category point in completely different directions. This is likely because:
+1. **These are not single transformations**: &#34;synonym&#34; is not a single function like &#34;make plural&#34; — the transformation from &#34;big&#34;→&#34;large&#34; is fundamentally different from &#34;fast&#34;→&#34;quick&#34;
+2. **Superposition**: Semantic relationships may be encoded in superposed, distributed representations rather than single directions
+3. **Context-dependence**: As Opiełka et al. (2026) showed, the &#34;direction&#34; for an abstract concept may vary with format/context
+
+### Two Senses of Compositionality
+
+Our results reveal a tension between two senses of &#34;compositional&#34;:
+1. **Geometric composition**: d_A + d_B preserves both component directions (CFS). This is *easier* for aligned directions (within-category) but comes with interference.
+2. **Functional composition**: Steering with d_A + d_B achieves both effects independently. This works well for both aligned and orthogonal directions, as long as both individual directions are coherent.
+
+The practical implication: **steering vector composition works well** in the regime where individual directions are well-formed (LOO &gt; 0.2), regardless of whether the directions are aligned or orthogonal.
+
+### Comparison with Prior Work
+
+- **Park et al. (2024)**: Our causal inner product heatmap confirms their block-diagonal structure. We extend their finding by showing this structure holds specifically for morphological and encyclopedic concepts but breaks down for lexicographic relations.
+- **Todd et al. (2024)**: Their finding that &#34;some function vectors compose and some don&#39;t&#34; aligns with our taxonomy — the compositions that work involve well-defined functional transformations (like our morphological categories), while those that fail likely involve poorly-defined directions.
+- **Elhage et al. (2022)**: Superposition likely explains why lexicographic relations don&#39;t form clean directions — these are encoded in distributed, superposed representations.
+
+## 6. Limitations
+
+1. **Model**: We tested only Pythia-2.8B. Results may differ for larger models (where superposition may resolve) or architecturally different models.
+2. **Unembedding space only**: We extracted directions from the unembedding matrix, not intermediate layers. Compositional structure may differ across layers.
+3. **BATS 3.0 coverage**: The dataset covers morphological and basic semantic relations but not abstract behavioral concepts (honesty, sycophancy) tested in steering literature.
+4. **Ceiling effect in steering**: Steering accuracy was near-ceiling (&gt;96% everywhere), making it hard to differentiate pair types. Future work should use harder steering tasks or finer-grained metrics (logit shift magnitude, rank changes).
+5. **Single-token constraint**: We required both base and target words to be single tokens, limiting the available pairs. Multi-token analysis could capture more concepts.
+6. **No ground-truth for &#34;compositional&#34;**: We define compositionality operationally (CFS, steering accuracy) but there is no ground-truth benchmark for direction compositionality.
+
+## 7. Conclusions &amp; Next Steps
+
+### Clear Answer
+Not all conceptual relations form linear directions in the residual stream. **Morphological transformations form strong, compositional linear directions; encyclopedic associations form moderate ones; lexicographic semantic relations generally fail to form coherent linear directions at all.** Among well-formed linear directions, composition via vector addition is remarkably robust for both geometric and functional purposes.
+
+### Implications
+- **For steering**: Practitioners can compose steering vectors for well-defined transformations (morphological, simple semantic) with confidence. Abstract semantic relations require caution.
+- **For interpretability**: The linear representation hypothesis holds strongly for morphological structure and weakly for semantic structure. This should inform where linear probing is expected to work.
+- **For theory**: The boundary of linearity appears to be between *regular functional transformations* (which have consistent direction) and *family-resemblance categories* (which don&#39;t).
+
+### Recommended Follow-Up
+1. Test on larger models (LLaMA-3-8B, Gemma-2-9B) to see if lexicographic relations become more linear
+2. Analyze intermediate layers, not just unembedding space
+3. Test behavioral concepts (honesty, helpfulness) for compositionality
+4. Develop harder steering benchmarks that avoid ceiling effects
+5. Study the relationship between superposition and direction quality using SAE-based decomposition
+
+## References
+
+1. Park, K., Choe, Y. J., &amp; Veitch, V. (2024). The Linear Representation Hypothesis and the Geometry of Large Language Models. ICML 2024.
+2. Park, K., Choe, Y. J., Jiang, Y., &amp; Veitch, V. (2025). The Geometry of Categorical and Hierarchical Concepts in Large Language Models. ICLR 2025.
+3. Todd, E., et al. (2024). Function Vectors in Large Language Models. ICLR 2024.
+4. Opiełka, J., et al. (2026). Causality ≠ Invariance: Function and Concept Vectors in LLMs. ICLR 2026.
+5. Elhage, N., et al. (2022). Toy Models of Superposition. Anthropic.
+6. Gladkova, A., Drozd, A., &amp; Matsuoka, S. (2016). Analogy-based detection of morphological and semantic relations with word embeddings. NAACL-HLT 2016 (BATS 3.0).
+7. Biderman, S., et al. (2023). Pythia: A Suite for Analyzing Large Language Models Across Training and Scaling. ICML 2023.
+
+
+════════════════════════════════════════════════════════════════════════════════
+                            RESEARCH PLAN
+════════════════════════════════════════════════════════════════════════════════
+
+# Research Plan: Which Linear Directions Are Compositional?
+
+## Motivation &amp; Novelty Assessment
+
+### Why This Research Matters
+The linear representation hypothesis — that high-level concepts are encoded as linear directions in LLM residual streams — is foundational to mechanistic interpretability. If these directions compose reliably (v_A + v_B yields the joint concept A∧B), then representation engineering becomes a principled tool for understanding and steering LLMs. If they don&#39;t compose, the field needs to understand *when and why* composition fails, so that practitioners know the limits of linear probing, steering vectors, and activation editing.
+
+### Gap in Existing Work
+Park et al. (2024) proved that causally separable concepts yield orthogonal directions and showed block-diagonal structure among related concepts. Todd et al. (2024) demonstrated that some function vectors compose via vector algebra (e.g., Last-Capital = Last-Copy + First-Capital - First-Copy) while others fail badly. However, **no one has systematically mapped the boundary between compositional and non-compositional directions**. Specifically:
+- Park et al. tested orthogonality but not additive composition of directions
+- Todd et al. tested composition of function vectors but only for ~10 composite tasks
+- No work measures *degree of compositionality* across a broad taxonomy of concept types
+
+### Our Novel Contribution
+We systematically test compositionality of linear directions across 4 concept categories (morphological, encyclopedic, lexicographic, functional) using a model&#39;s unembedding space. We introduce a **Composition Fidelity Score (CFS)** that measures how well the sum of two independently-extracted directions matches a direction extracted from jointly-defined concepts. We also measure **interference** — whether composing directions degrades performance on individual concepts. This creates the first empirical map of which types of directions compose and which don&#39;t.
+
+### Experiment Justification
+- **Experiment 1 (Direction Quality)**: Verify that extracted concept directions are meaningful (high leave-one-out consistency, above-random probing accuracy). Without this, composition tests are meaningless.
+- **Experiment 2 (Within-Category Composition)**: Test whether related directions (e.g., noun-plural + verb-past within morphology) compose. Literature suggests they should (Park&#39;s block-diagonal structure).
+- **Experiment 3 (Cross-Category Composition)**: Test whether unrelated directions (e.g., morphological + encyclopedic) compose. Literature suggests they should compose better (orthogonal → no interference) or fail (superposition interference).
+- **Experiment 4 (Steering Composition)**: Test whether composed steering vectors achieve their intended effect without side effects. This is the practical test of compositionality.
+
+## Research Question
+Which linear directions in the residual stream of Transformer LLMs form coherent compositional subspaces (where direction addition preserves meaning), and which are merely approximately linear in isolation?
+
+## Hypothesis Decomposition
+1. **H1 (Related concepts share subspace)**: Directions for related concepts within the same semantic category (e.g., country→capital and country→language) will have non-zero causal inner products and moderate composition fidelity.
+2. **H2 (Unrelated concepts are orthogonal)**: Directions for unrelated concepts across categories (e.g., morphological vs. encyclopedic) will be approximately orthogonal under the causal inner product.
+3. **H3 (Orthogonal directions compose better)**: Cross-category direction pairs (orthogonal) will show higher composition fidelity than within-category pairs (non-orthogonal), because interference is lower.
+4. **H4 (Superposition degrades composition)**: Concept directions that are more superposed (higher interference with random directions) will show lower composition fidelity.
+
+## Proposed Methodology
+
+### Approach
+We use **google/gemma-2-2b** as our primary model (well-studied, fits on single GPU, used in Park et al. 2024b). We extract concept directions from the unembedding matrix using the counterfactual pairs approach from Park et al. We then test composition by:
+1. Extracting individual concept directions d_A, d_B
+2. Extracting a &#34;joint&#34; direction d_{A,B} from tokens that satisfy both concepts
+3. Measuring how well d_A + d_B aligns with d_{A,B} (Composition Fidelity Score)
+4. Measuring interference: does applying d_A as a steering vector affect concept B?
+
+### Experimental Steps
+1. Load Gemma-2B, extract unembedding matrix W_U
+2. Load BATS 3.0 counterfactual pairs for ~30 concept categories
+3. Extract concept directions using mean-difference method (Park et al.)
+4. Compute causal inner product matrix across all concept pairs
+5. For each pair of concepts: compute CFS and interference scores
+6. Categorize results by concept type (morphological, encyclopedic, lexicographic)
+7. Statistical analysis: compare within-category vs. cross-category composition
+8. Visualize: heatmaps, scatter plots of orthogonality vs. composition fidelity
+
+### Baselines
+- **Random directions**: Null baseline for all metrics
+- **Euclidean inner product**: Compare against causal inner product
+- **Individual direction performance**: Baseline for steering experiments
+
+### Evaluation Metrics
+1. **Leave-one-out consistency**: How stable is the extracted direction? (validates quality)
+2. **Causal inner product**: |⟨d_A, d_B⟩_C| — measures orthogonality
+3. **Composition Fidelity Score (CFS)**: cosine_similarity(d_A + d_B, d_{A,B}) — measures additive composition
+4. **Interference Score**: Change in concept-B probing accuracy when d_A is added
+5. **Steering Accuracy**: Does adding d_A change the model&#39;s output on concept A?
+
+### Statistical Analysis Plan
+- Paired t-tests / Wilcoxon signed-rank for within-category vs. cross-category comparisons
+- Pearson/Spearman correlation between orthogonality and composition fidelity
+- Bootstrap confidence intervals for all aggregate metrics
+- Significance level: α = 0.05 with Bonferroni correction for multiple comparisons
+
+## Expected Outcomes
+- H1 supported: Within-category concept pairs show moderate CFS (0.3-0.7) and non-zero causal inner products
+- H2 supported: Cross-category pairs show near-zero causal inner products (&lt;0.1)
+- H3: Cross-category pairs show higher CFS than within-category pairs (less interference)
+- H4: Negative correlation between superposition degree and CFS
+
+## Timeline and Milestones
+1. Direction extraction + quality validation: 30 min
+2. Inner product matrix computation: 20 min
+3. Composition experiments: 40 min
+4. Steering experiments: 30 min
+5. Analysis + visualization: 30 min
+6. Documentation: 30 min
+
+## Potential Challenges
+- Some BATS categories may have too few single-token pairs for Gemma&#39;s tokenizer → fall back to categories with sufficient pairs
+- Joint concept directions (d_{A,B}) may be hard to define for arbitrary concept pairs → use the intersection of token sets
+- Gemma-2B may be too small to show clean linear structure → validate direction quality first
+
+## Success Criteria
+- At least 15 concept categories with ≥10 valid single-token pairs each
+- Clear separation in CFS between within-category and cross-category pairs
+- Statistical significance (p &lt; 0.05) for at least one hypothesis test
+- Interpretable visualization showing the compositionality landscape
+
+
+════════════════════════════════════════════════════════════════════════════════
+                          LITERATURE REVIEW
+════════════════════════════════════════════════════════════════════════════════
+
+# Literature Review: Which Linear Directions Are Compositional?
+
+## Research Area Overview
+
+The &#34;linear representation hypothesis&#34; posits that high-level semantic concepts are encoded as linear directions in the representation spaces of Transformer LLMs. This literature review surveys the theoretical foundations, empirical evidence, and open questions around whether these linear directions form coherent subspaces that can be composed—i.e., which directions are compositional and which are singular.
+
+## Key Papers
+
+### 1. Park et al. (2024a) — &#34;The Linear Representation Hypothesis and the Geometry of Large Language Models&#34; (ICML 2024)
+
+**Key Contribution:** Formalizes the linear representation hypothesis using counterfactuals. Shows three notions of &#34;linear representation&#34; (subspace, measurement, intervention) are unified under a *causal inner product*.
+
+**Methodology:**
+- Defines concepts as latent variables with counterfactual outputs (e.g., male⇒female yields {&#34;man&#34;,&#34;woman&#34;}, {&#34;king&#34;,&#34;queen&#34;}, ...)
+- *Unembedding representation* γ̄_W: concept direction in token output space → connected to linear probing (Theorem 2.2)
+- *Embedding representation* λ̄_W: concept direction in context space → connected to steering/intervention (Theorem 2.5)
+- *Causal inner product*: an inner product where causally separable concepts are orthogonal. Estimated as `⟨γ̄, γ̄&#39;⟩_C = γ̄ᵀ Cov(γ)⁻¹ γ̄&#39;`
+
+**Key Results:**
+- 27 concepts tested on LLaMA-2-7B using BATS 3.0 counterfactual pairs
+- Block-diagonal structure in inner-product heatmap: related concepts (verb tenses, language pairs) have non-zero inner products; unrelated concepts are orthogonal
+- Concept directions act as linear probes AND intervention vectors
+- **Critical for our research:** Causally separable concepts (e.g., gender and language) are orthogonal → they live in independent subspaces. But *related* concepts (e.g., verb→3pSg and verb→Ving) have non-zero inner products → they share subspace structure.
+
+**Datasets Used:** BATS 3.0, bilingual lexicons (word2word), Wikipedia
+**Code:** github.com/KihoPark/linear_rep_geometry
+
+---
+
+### 2. Park et al. (2024b) — &#34;The Geometry of Categorical and Hierarchical Concepts in LLMs&#34; (ICLR 2025)
+
+**Key Contribution:** Extends linear representation from binary concepts (directions) to categorical concepts (polytopes) and shows hierarchical relationships are encoded as orthogonality.
+
+**Methodology:**
+- Binary features (e.g., `is_animal`) get *vector representations* (with magnitude), not just directions
+- Categorical concepts ({mammal, bird, reptile, fish}) are polytopes (convex hulls of feature vectors)
+- **Theorem 8 (Hierarchical Orthogonality):** If concept Z is subordinate to W (e.g., mammal⊂animal), then ℓ̄_animal ⊥ (ℓ̄_mammal - ℓ̄_animal) — the &#34;refining&#34; direction is orthogonal to the &#34;coarser&#34; concept
+
+**Key Results:**
+- Validated on Gemma-2B and LLaMA-3-8B using 900+ concepts from WordNet
+- Hierarchical concepts decompose as direct sums of polytopes
+- **Critical for our research:** This is the clearest evidence for *compositional subspaces*. Related concepts (animal → mammal → dog) live in orthogonal *sub*-directions that compose additively. The paper proves this structure follows from the definition of linear representation.
+
+**Datasets Used:** WordNet hierarchy, model vocabularies
+**Code:** github.com/KihoPark/LLM_Categorical_Hierarchical_Representations
+
+---
+
+### 3. Todd et al. (2024) — &#34;Function Vectors in Large Language Models&#34; (ICLR 2024)
+
+**Key Contribution:** Discovers that ICL tasks are represented as compact *function vectors* (FVs) in transformer hidden states, extractable by summing outputs of ~10 causal attention heads.
+
+**Methodology:**
+- Causal mediation analysis identifies attention heads that transport task information during ICL
+- FV = sum of mean activations of top causal heads across ICL prompts
+- Tests 40+ ICL tasks across GPT-J, GPT-NeoX, LLaMA-2 (7B–70B)
+
+**Key Results on Compositionality (Section 3.3):**
+- **FVs obey vector algebra over functions**: v*_BD = v_AD + v_BC - v_AC (parallelogram rule)
+- E.g., Last-Capital* = Last-Copy + First-Capital - First-Copy
+- Some compositions work well (Last-Country-Capital: 0.60 vs ICL 0.32), others fail (Last-Antonym: 0.07 vs ICL 0.25)
+- **Critical for our research:** This is direct evidence that *some* linear directions compose and others don&#39;t. The composable tasks appear to involve complementary mechanisms (word selection + word transformation). Tasks that resist composition may involve single entangled mechanisms.
+
+**Also important:** FVs encode more than just output vocabulary — they carry &#34;procedural&#34; information beyond decoded tokens.
+
+**Datasets Used:** Custom ICL task datasets (40+ tasks)
+**Code:** functions.baulab.info
+
+---
+
+### 4. Opiełka et al. (2026) — &#34;Causality ≠ Invariance: Function and Concept Vectors in LLMs&#34; (ICLR 2026)
+
+**Key Contribution:** Shows that FVs are NOT format-invariant—same concept extracted from different formats (open-ended vs multiple-choice) yields nearly orthogonal FVs. Introduces *Concept Vectors* (CVs) using RSA that ARE format-invariant.
+
+**Methodology:**
+- Compares activation patching (AP, selects causal heads → FVs) with Representational Similarity Analysis (RSA, selects format-invariant heads → CVs)
+- 7 concepts × 3 formats × 4 models (Llama 3.1 8B/70B, Qwen 2.5 7B/72B)
+
+**Key Results:**
+- FV heads and CV heads are largely disjoint despite appearing in similar layers
+- FVs excel in-distribution; CVs generalize better out-of-distribution
+- **Critical for our research:** This reveals that &#34;linear directions&#34; are not monolithic. There are at least two kinds: (1) causal/functional directions that drive task performance but mix concept with format, and (2) invariant/conceptual directions that encode abstract concepts stably. Only the latter are truly &#34;compositional&#34; in the sense of being reusable across contexts.
+
+---
+
+### 5. Elhage et al. (2022) — &#34;Toy Models of Superposition&#34; (Anthropic)
+
+**Key Contribution:** Shows that neural networks represent more features than they have dimensions through *superposition*—features are encoded as nearly-orthogonal directions in a lower-dimensional space.
+
+**Key Results:**
+- When features are sparse, networks pack them into fewer dimensions using near-orthogonal directions
+- Feature importance and sparsity determine whether a feature gets a dedicated dimension vs. being superposed
+- Phase transitions: as sparsity increases, features transition from dedicated neurons → superposed directions
+- **Critical for our research:** Superposition means many &#34;linear directions&#34; are NOT independent subspaces—they are approximately orthogonal but interfere. This is a key mechanism by which directions FAIL to be compositional: superposed features cannot be cleanly composed because adding one direction partially activates others.
+
+---
+
+### 6. Zou et al. (2023) — &#34;Representation Engineering&#34; (arXiv)
+
+**Key Contribution:** Introduces RepE, a top-down approach using population-level representations (not individual neurons) to monitor and manipulate cognitive phenomena in LLMs.
+
+**Relevance:** Shows that contrastive pairs can extract &#34;reading vectors&#34; for high-level concepts (honesty, fairness, etc.) that work as steering vectors. Demonstrates that even abstract behavioral concepts have approximately linear representations, but their compositionality is not systematically studied.
+
+---
+
+### 7. Panickssery et al. (2023) — &#34;Steering Llama 2 via Contrastive Activation Addition&#34; (arXiv)
+
+**Key Contribution:** CAA computes steering vectors by averaging residual stream activation differences between positive/negative behavioral examples.
+
+**Relevance:** Shows steering vectors for behavioral concepts (sycophancy, hallucination, etc.) can be extracted and applied. But steering multiple behaviors simultaneously (composing vectors) is not systematically validated—a gap our research addresses.
+
+---
+
+### 8. Bereska et al. (2025) — &#34;Superposition as Lossy Compression&#34;
+
+**Key Contribution:** Information-theoretic framework measuring superposition via sparse autoencoders. Connects superposition to adversarial vulnerability.
+
+**Relevance:** Provides tools to *measure* how much superposition exists, which directly relates to how compositional directions can be—more superposition means less clean composability.
+
+---
+
+### 9. Hänni et al. (2024) — &#34;Mathematical Models of Computation in Superposition&#34;
+
+**Key Contribution:** Studies *computational* superposition (not just representational), where superposition is used during computation, not just storage.
+
+**Relevance:** Even if features are cleanly stored, computation on superposed features introduces interference. This suggests composition may fail at the computation stage even if representations are clean.
+
+---
+
+### 10. Marks et al. (2024) — &#34;Sparse Feature Circuits&#34;
+
+**Key Contribution:** Discovers causally implicated subnetworks of SAE-identified features. Features form interpretable circuits.
+
+**Relevance:** Feature circuits provide a mechanism-level understanding of how features interact—essential for understanding when composition succeeds or fails.
+
+---
+
+## Common Methodologies
+
+1. **Counterfactual pairs** (Park et al.): Define concepts via word pairs that differ on exactly one attribute. Used for both probing and steering.
+2. **Causal mediation / activation patching** (Todd et al., Opiełka et al.): Identify model components causally responsible for specific behaviors.
+3. **Contrastive activation differences** (Zou et al., Panickssery et al.): Extract concept directions by averaging activation differences between positive/negative examples.
+4. **Sparse autoencoders** (Bricken et al., Marks et al., Bereska et al.): Decompose activations into interpretable features to study superposition.
+5. **Causal inner product** (Park et al.): Transform representation space so Euclidean operations respect causal structure: `g(y) = Cov(γ)^{-1/2}(γ(y) - E[γ])`
+
+## Standard Baselines
+
+- **Euclidean inner product**: Baseline comparison for the causal inner product
+- **Random directions**: Baseline for verifying concept directions are meaningful
+- **Linear probes**: Standard method for testing whether information is linearly accessible
+- **ICL performance**: Baseline for function vector effectiveness
+- **PCA / mean difference**: Simple baselines for extracting concept directions
+
+## Evaluation Metrics
+
+- **Cosine similarity** between concept directions (with appropriate inner product)
+- **Linear probing accuracy**: How well a direction separates concept values
+- **Steering accuracy**: How well adding a direction changes model behavior on target concept without affecting off-target concepts
+- **Orthogonality measures**: Inner products between representations of related/unrelated concepts
+- **Composition accuracy**: Performance of composed vectors (v_A + v_B) vs. individual vectors
+
+## Datasets in the Literature
+
+| Dataset | Used By | Purpose |
+|---------|---------|---------|
+| BATS 3.0 | Park et al. 2024a | Counterfactual word pairs for 22 morphological/semantic concepts |
+| WordNet | Park et al. 2024b | Hierarchical concept taxonomy (900+ concepts) |
+| word2word bilingual lexicons | Park et al. 2024a | Cross-lingual counterfactual pairs |
+| Custom ICL tasks (40+) | Todd et al. 2024 | Function vector extraction and composition |
+| Google analogy dataset | Mikolov et al. 2013 | Classic word analogy benchmarks |
+| Wikipedia (multilingual) | Park et al. 2024a | Natural text for probing experiments |
+
+## Gaps and Opportunities
+
+1. **No systematic taxonomy of which directions compose.** Park et al. show hierarchical concepts compose; Todd et al. show some FVs compose. But no one has mapped the *boundary* between compositional and non-compositional directions.
+
+2. **Superposition vs. composition trade-off is unexplored.** Elhage et al. show features superpose; Park et al. show clean concepts are orthogonal. The relationship between degree of superposition and composability is not studied.
+
+3. **Format-dependence of composition.** Opiełka et al. show FVs mix concept with format. Whether *compositional* structure is preserved across formats is unknown.
+
+4. **Layer-wise composition analysis.** Most work studies the final layer (unembedding space) or a single intermediate layer. How composability varies across layers is unstudied.
+
+5. **Quantitative metrics for compositionality.** No standard metric exists for measuring &#34;how compositional&#34; a set of directions is.
+
+## Recommendations for Our Experiment
+
+### Primary Datasets
+1. **BATS 3.0** — provides counterfactual pairs for extracting concept directions across semantic and morphological categories
+2. **WordNet via NLTK** — provides hierarchical concept structure for testing compositional orthogonality
+3. **Custom ICL task data** from Todd et al. — for testing function vector composition
+
+### Recommended Baselines
+1. Euclidean vs. causal inner product for measuring orthogonality
+2. Individual concept directions vs. composed directions for measuring composition quality
+3. Random directions as null baseline
+
+### Recommended Metrics
+1. Cosine similarity (under causal inner product) between related and unrelated concept pairs
+2. Steering accuracy (single concept vs. composed concepts)
+3. Interference measure: does adding direction A affect concept B?
+4. Composition fidelity: does v_A + v_B achieve the same effect as v_{A+B} extracted directly?
+
+### Recommended Models
+- **Gemma-2B** or **LLaMA-3-8B** (used in Park et al. 2024b, manageable size)
+- Larger models (LLaMA-2-7B, LLaMA-2-13B) for validation
+
+### Methodological Considerations
+- Always use the causal inner product (Cov(γ)^{-1/2} whitening) rather than Euclidean
+- Extract directions from both unembedding space (clean, theory-grounded) and intermediate layers (more practical)
+- Test composition at multiple granularities: word-level concepts, categorical concepts, behavioral concepts
+- Control for superposition effects by measuring feature sparsity
+
+
+════════════════════════════════════════════════════════════════════════════════
+                          PAPER REQUIREMENTS
+════════════════════════════════════════════════════════════════════════════════
+
+Generate a complete academic paper with the following structure:
+
+1. TITLE
+   - Clear, specific, informative
+   - Should convey main finding or contribution
+
+2. AUTHOR
+   - Use this exact author line in the \author{} block: Ari Holtzman and NeuriCo
+
+3. ABSTRACT (150-250 words)
+   - Problem statement
+   - Approach
+   - Key results
+   - Significance
+
+4. INTRODUCTION
+   - Research problem and motivation
+   - Gap in existing work
+   - Our contribution (be specific)
+   - Paper organization
+
+5. RELATED WORK
+   - Organized by theme/approach
+   - Position our work relative to prior work
+   - Cite papers from literature review
+
+6. METHODOLOGY
+   - Clear description of approach
+   - Experimental setup
+   - Datasets used
+   - Evaluation metrics
+   - Baselines
+
+7. RESULTS
+   - Present results with tables and figures
+   - Statistical analysis
+   - Comparison to baselines
+   - Ablation studies (if applicable)
+
+8. DISCUSSION
+   - Interpretation of results
+   - Limitations
+   - Broader implications
+
+9. CONCLUSION
+   - Summary of contributions
+   - Key findings
+   - Future work
+
+10. REFERENCES
+   - BibTeX format
+   - All cited papers
+
+════════════════════════════════════════════════════════════════════════════════
+                          OUTPUT FORMAT
+════════════════════════════════════════════════════════════════════════════════
+
+Create a MODULAR LaTeX project with the following directory structure:
+
+paper_draft/
+├── main.tex              # Main file that imports all sections
+├── references.bib        # BibTeX references
+├── sections/
+│   ├── abstract.tex      # Abstract content
+│   ├── introduction.tex  # Introduction section
+│   ├── related_work.tex  # Related work section
+│   ├── methodology.tex   # Methodology section
+│   ├── results.tex       # Results section
+│   ├── discussion.tex    # Discussion section
+│   └── conclusion.tex    # Conclusion section
+├── figures/              # Directory for any generated figures
+├── tables/               # Directory for complex standalone tables
+└── appendix/             # Directory for appendix sections (if needed)
+
+INSTRUCTIONS:
+1. First, create the directory structure above (mkdir -p paper_draft/sections paper_draft/figures paper_draft/tables paper_draft/appendix)
+2. Write main.tex using the EXACT preamble for NEURIPS:
+
+   \documentclass{article}
+   \usepackage[final]{neurips_2025}  % NEURIPS style (neurips_2025.sty is in paper_draft/)
+   \usepackage[hidelinks]{hyperref}  % REQUIRED: clickable links
+   \usepackage{booktabs}  % REQUIRED: professional tables
+   \usepackage{graphicx}
+   \usepackage{amsmath,amssymb}
+
+   % Import command files
+   \input{commands/math}
+   \input{commands/general}
+   \input{commands/macros}
+
+   % Use this bibliography style:
+   \bibliographystyle{plainnat}
+
+   \author{Ari Holtzman and NeuriCo}
+
+   - Use \input{sections/...} to include each section
+   - Use \bibliography{references} for references
+3. Write each section file with COMPLETE content (no placeholders)
+4. Each section file should include its \section{} command
+5. Write references.bib with all citations in BibTeX format
+6. After writing all files, compile the paper:
+   cd paper_draft && pdflatex -interaction=nonstopmode main.tex && bibtex main && pdflatex -interaction=nonstopmode main.tex && pdflatex -interaction=nonstopmode main.tex
+
+This modular structure allows humans to easily:
+- Edit individual sections without navigating a large file
+- Track changes per section
+- Reuse sections across different paper versions
+
+════════════════════════════════════════════════════════════════════════════════
+                          QUALITY REQUIREMENTS
+════════════════════════════════════════════════════════════════════════════════
+
+- Academic tone throughout
+- All claims must be supported by data from the experiment report
+- Proper citations using \cite{} commands
+- Clear figures and tables with proper captions
+- NO placeholder text - every section must have real content
+- The paper MUST compile without errors
+- If compilation fails, debug and fix the LaTeX errors
+
+════════════════════════════════════════════════════════════════════════════════
+                          LAB WRITING STYLE
+════════════════════════════════════════════════════════════════════════════════
+
+Follow these lab-specific conventions to match our paper style:
+
+1. LANGUAGE STYLE:
+   - Use active voice: "We propose", "We examine", "We focus on"
+   - Be direct and confident: "Our main question is...", "We hypothesize that..."
+   - State things clearly and simply - prefer plain language over jargon
+   - Use bold questions as paragraph organizers: {\bf what is X?}
+   - Include specific quantitative claims: "8.97% over baseline"
+   - Avoid fancy wording: "utilize" → "use", "facilitate" → "help"
+
+2. INTRODUCTION STRUCTURE:
+   - Engaging hook (get to the point quickly)
+   - Problem importance
+   - Gap identification
+   - Your approach with method figure reference
+   - Quantitative preview of results
+   - Contribution bullets (3-4 items, action verbs)
+
+3. CONTRIBUTION LISTS:
+   \begin{itemize}[leftmargin=*,itemsep=0pt,topsep=0pt]
+       \item We propose...
+       \item We conduct...
+       \item We complement...
+   \end{itemize}
+
+4. MODULAR COMMANDS STRUCTURE:
+   Command templates are pre-copied to paper_draft/commands/:
+   - math.tex: Math notation macros
+   - general.tex: Formatting macros
+   - macros.tex: Project-specific term definitions (customize this for your paper)
+
+   In main.tex, include:
+   \input{commands/math}
+   \input{commands/general}
+   \input{commands/macros}
+
+5. REFERENCE CONVENTIONS:
+   Use reference macros from math.tex:
+   - \figref{fig:name} for "figure 1" (lowercase, in-sentence)
+   - \Figref{fig:name} for "Figure 1" (capitalized, start of sentence)
+   - \secref{sec:name} for "section 2"
+
+6. TEXT FORMATTING:
+   - Use \para{Header text} for bold paragraph headers
+   - Define method/dataset names with \textsc and \xspace:
+     \newcommand{\methodname}{\textsc{MethodName}\xspace}
+
+7. TABLE FORMATTING:
+   - Use booktabs package (no vertical lines)
+   - Use \resizebox{\textwidth}{!}{...} for wide tables
+   - Use @{} to remove padding at table edges
+   - Use \cmidrule(lr){x-y} for sub-headers
+   - Use \textsc{} for dataset/method names in headers
+   - Bold best results with {\bf ...}
+
+8. FIGURE FORMATTING:
+   - Use 0.32\textwidth for 3-column subfigures
+   - Use 0.95\linewidth for full-width figures
+   - Use \input{figures/legend} for shared legends
+   - Write self-contained captions explaining key observations
+
+9. RESULTS PRESENTATION:
+   - Define \increase and \decrease for colored arrows (green up, red down)
+   - Bold best results in tables
+   - Report confidence intervals when available
+
+10. ALGORITHM STYLING:
+    - Use algpseudocode with [noend]
+    - Use \triangleright for comments
+
+11. HYPERLINKS (REQUIRED):
+    - Always use \usepackage[hidelinks]{hyperref} or with colored links
+    - All citations, section refs, figure refs, table refs must be clickable
+    - This is essential for reader navigation
+
+════════════════════════════════════════════════════════════════════════════════
+                          WORKFLOW: REVIEW AND REFLECT
+════════════════════════════════════════════════════════════════════════════════
+
+Before calling finish, you MUST complete these review steps:
+
+1. REVIEW RESOURCES (at the start):
+   - Read .claude/skills/paper-writer/SKILL.md for detailed guidance
+   - Study templates/paper_writing/lab_style_guide.md for style conventions
+   - Browse paper_examples/ for formatting and language patterns
+
+2. SELF-REFLECTION (before finishing):
+   After writing all sections, review your work against these criteria:
+
+   LANGUAGE CHECK:
+   - [ ] Is the writing clear and jargon-free?
+   - [ ] Are claims specific with quantitative support?
+   - [ ] Is active voice used throughout?
+
+   FORMATTING CHECK:
+   - [ ] Does main.tex include \input{commands/math}, \input{commands/general}, \input{commands/macros}?
+   - [ ] Is hyperref package included for clickable references?
+   - [ ] Do tables use booktabs (no vertical lines)?
+   - [ ] Are best results bolded in tables?
+   - [ ] Are figures/tables properly captioned?
+
+   STRUCTURE CHECK:
+   - [ ] Does introduction follow: hook → importance → gap → approach → preview → contributions?
+   - [ ] Are contribution bullets specific with action verbs?
+   - [ ] Does the paper compile without errors?
+
+3. FIX ISSUES:
+   - Address any issues found in the self-reflection
+   - Re-compile and verify the PDF looks correct
+
+Only after completing this review should you consider the paper finished.
