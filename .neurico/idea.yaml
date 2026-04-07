@@ -1,0 +1,28 @@
+idea:
+  title: Which linear directions are compositional?
+  domain: nlp
+  hypothesis: 'Not all linear directions in the residual stream of Transformer LLMs
+    form coherent linear subspaces that can be composed; however, related vectors
+    (such as those for "red" and "blue") may compose naturally. The research will
+    map which discovered linear directions are coherent subspaces and which are singular,
+    approximately linear directions.
+
+    '
+  background:
+    description: 'There is skepticism regarding the claim that linear representations
+      in the residual stream of Transformer LLMs form a fully compositional linear
+      space. The idea is that while some directions may compose naturally (e.g., related
+      color vectors), others may only appear linear in limited contexts. The goal
+      is to systematically analyze which linear directions are truly compositional
+      and which are not.
+
+      '
+  metadata:
+    author: Ari Holtzman
+    source: IdeaHub
+    source_url: https://hypogenic.ai/ideahub/idea/DQvf9rozqmC2H3nxft7J
+    idea_id: which_linear_directions_are_co_20260407_040822_bc0ef13f
+    created_at: '2026-04-07T04:08:22.066003'
+    status: submitted
+    github_repo_name: compositional-directions-claude
+    github_repo_url: https://github.com/Hypogenic-AI/compositional-directions-claude
